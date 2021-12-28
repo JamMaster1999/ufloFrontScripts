@@ -9,4 +9,5 @@ function addFrameCompMenu(frameEl){
     document.getElementsByClassName("frame_comp-list")[0].style.top = frameEl.getBoundingClientRect().top + window.scrollY + frameEl.clientHeight + "px"
     //initSearch(frameCompSearch.querySelector(".input"), searchWrapper.querySelector(".frame_comp-list"));
     prevAddFrameCompBtn = searchWrapper.querySelector('.button')
+    document.querySelector(".addframe")
 }
