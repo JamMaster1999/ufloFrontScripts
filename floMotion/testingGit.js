@@ -3,6 +3,6 @@ function testingGit(print){
 }
 console.log("CDN delivered");
 testingGit("something")
-// export function testExport(print){
-//     console.log(print + "Export")
-// }
+export function testExport(print){
+    console.log(print + "Export")
+}
