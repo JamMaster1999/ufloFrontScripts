@@ -1,0 +1,1013 @@
+<!DOCTYPE html><!--  This site was created in Webflow. http://www.webflow.com  -->
+<!--  Last Published: Tue Dec 14 2021 02:18:13 GMT+0000 (Coordinated Universal Time)  -->
+<html data-wf-page="61523afb3fb3e90e1987b43e" data-wf-site="61365f53652529080f68048b">
+<head>
+  <meta charset="utf-8">
+  <title>chart.js</title>
+  <meta content="chart.js" property="og:title">
+  <meta content="chart.js" property="twitter:title">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="Webflow" name="generator">
+  <link href="css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="css/webflow.css" rel="stylesheet" type="text/css">
+  <link href="css/flomotion-final.webflow.css" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+  <script type="text/javascript">WebFont.load({  google: {    families: ["PT Sans:400,400italic,700,700italic","Open Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic","Exo:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic"]  }});</script>
+  <!-- [if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif] -->
+  <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+  <link href="images/webclip.png" rel="apple-touch-icon">
+  <style>
+  .blur {
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  }
+  .large-blur {
+  -webkit-backdrop-filter: blur(35px);
+  backdrop-filter: blur(35px);
+  }
+</style>
+  <link href="https://embed.wized.io/css/app.css" rel="stylesheet">
+  <style>
+body .transition {display: flex}
+.w-editor .transition {display: none;}
+.no-scroll-transition {overflow: hidden; position: relative;}
+html {
+  --scrollbarBG: #101010;
+  --thumbBG: #404040;
+  --divscrollbarBG: #303030;
+  --divthumbBG: #707070;
+}
+body {
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+body::-webkit-scrollbar {
+width: 12px;
+}
+body::-webkit-scrollbar-track {
+  background: var(--scrollbarBG);
+}
+body::-webkit-scrollbar-thumb {
+  background-color: var(--thumbBG) ;
+  border-radius: 5px;
+  border: 3px solid var(--scrollbarBG);
+}
+  div::-webkit-scrollbar {
+width: 9px;
+}
+div::-webkit-scrollbar-track {
+  background: var(--divscrollbarBG);
+}
+div::-webkit-scrollbar-thumb {
+  background-color: var(--divthumbBG) ;
+  border-radius: 5px;
+  border: 2.5px solid var(--divscrollbarBG);
+}
+</style>
+  <script src="https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+  <script type="text/javascript" id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
+  <style>
+.results {
+	display:flex;
+}
+.noresults{
+	display:none;
+}
+</style>
+  <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="section is--course-dash">
+  <div data-w-id="fb232b77-aaf2-f903-dc47-b61f731fcd0f" class="transition-animation section--bg-color large-blur is--hidden">
+    <div data-w-id="0b0fa157-470c-4ecb-b25c-115f5982883c" data-animation-type="lottie" data-src="documents/lf30_editor_kbjs3qv2.json" data-loop="0" data-direction="1" data-autoplay="0" data-is-ix2-target="1" data-renderer="svg" data-default-duration="2.183333333333333" data-duration="0" class="icon-img is--large"></div>
+    <h3 class="is--btm-margin">Resizing Canvas</h3>
+    <div class="text is--weight700">Please wait...</div>
+  </div>
+  <div class="section_theme is--peace-bg"></div>
+  <div class="section_navbar is--editmode section--bg-color large-blur is--solid-border">
+    <div class="navmenu_buttons is--flomotion">
+      <div class="filter-button is--border"><img src="images/magnifying-glass.svg" loading="lazy" alt="Search icon
+" class="icon-img is--medium"></div>
+      <div data-w-id="91ab7c3e-f8c6-e0f0-a478-549f42108ca6" class="filter-button is--border"><img src="images/menu-button-of-three-horizontal-lines_1.svg" loading="lazy" alt="hamburger menu" class="icon-img is--medium"></div>
+      <div class="filter-button is--border"><img src="images/slow-motion.svg" loading="lazy" alt="animation icon" class="icon-img is--large"></div>
+      <div class="filter-button is--border"><img src="images/visibility.svg" loading="lazy" alt="visible icon" class="icon-img is--large"></div>
+      <div class="filter-button is--border is--peace"><img src="images/students-cap.svg" loading="lazy" alt="icon representing students" class="icon-img is--large"></div>
+      <div class="filter-button is--border"><img src="images/rocket.svg" loading="lazy" alt="publish this page to the web for students to see." class="icon-img is--medium"></div>
+      <div class="filter-button is--border"><img src="images/cloud-computing-1.svg" loading="lazy" alt="upload icon" class="icon-img is--large"></div>
+      <div data-w-id="1f3ab417-68c9-6d13-4587-1fc97b491228" class="filter-button is--border"><img src="images/list-interface-symbol.svg" loading="lazy" alt="summary icon" class="icon-img is--large"></div>
+    </div>
+    <h4 class="is--center is--text-color">Learning Objective Name here</h4>
+    <div class="lesson-nav-overview">
+      <a href="#" class="text is--highlighted is--weight700 is--text-color">Chapter #</a>
+      <div class="heightline is--thin is-lesson-nav is--right-margin is--left-margin"></div>
+      <a href="#" class="text is--highlighted is--weight700 is--text-color">Lesson #</a>
+      <div class="heightline is--thin is-lesson-nav is--right-margin is--left-margin"></div>
+      <a href="#" class="text is--highlighted is--weight700 is--text-color is--right-margin">LOBJ #</a>
+    </div>
+  </div>
+  <div class="rightengine large-blur section--bg-color">
+    <div class="framerep-w">
+      <div data-w-id="13878fb7-42e3-874b-8ff4-9b2c6ca2961f" class="is--state-holder">
+        <div class="frame-w section--bg-color is--text-color">
+          <div class="tag-w">
+            <div class="frame_tag is--right-margin">
+              <div>Tag</div>
+            </div>
+            <div class="frame_tag is--pink is--right-margin">x</div>
+          </div>
+          <h6>Frame Heading</h6>
+          <div class="full-width is--thin"></div>
+          <p>Frame Text<br></p>
+          <div class="frame_note-w">
+            <div class="text">Normal </div>
+            <div class="note_panel"></div>
+            <div>This is some text inside of a div block.</div>
+          </div>
+          <a href="#" class="frame_lock-btn w-inline-block"></a>
+          <div class="embed w-embed w-script">
+            <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+            <!--  Create the editor container  -->
+            <div id="editor">
+              <p>Hello World!</p>
+              <p>Some initial <strong>bold</strong> text</p>
+              <p><br></p>
+            </div>
+            <!--  Include the Quill library  -->
+            <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+            <!--  Initialize Quill editor  -->
+            <script>
+  var quill = new Quill('#editor', {
+    theme: 'snow'
+  });
+</script>
+          </div>
+          <div class="embed w-embed w-script">
+            <script src="https://unpkg.com/mathlive/dist/mathlive.min.js"></script>
+            <math-field style="
+    font-size: 1em;
+    border-radius: 5px;
+" ;="" virtual-keyboard-mode="manual">
+              x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}
+            </math-field>
+          </div>
+          <div class="frame_note-w is--blue">
+            <div class="text">Blue</div>
+            <p>Note Message.</p>
+            <div class="note_panel is--blue"></div>
+          </div>
+          <div class="frame_note-w is--teal">
+            <div class="text">Blue</div>
+            <p>Note Message.</p>
+            <div class="note_panel is--teal"></div>
+          </div>
+          <div class="frame_note-w is--green">
+            <div class="text">Blue</div>
+            <p>Note Message.</p>
+            <div class="note_panel is--green"></div>
+          </div>
+          <div class="frame_note-w is--orange">
+            <div class="text">Blue</div>
+            <p>Note Message.</p>
+            <div class="note_panel is--orange"></div>
+          </div>
+          <div class="frame_note-w is--pink">
+            <div class="text">Blue</div>
+            <p>Note Message.</p>
+            <div class="note_panel is--pink"></div>
+          </div>
+          <div class="frame_note-w is--red">
+            <div class="text">Blue</div>
+            <p>Note Message.</p>
+            <div class="note_panel is--red"></div>
+          </div>
+        </div>
+        <div class="frame-w is--hidden">
+          <div class="tag-w">
+            <div class="frame_tag">
+              <div>Tag</div>
+            </div>
+            <div class="frame_tag is--pink">x</div>
+          </div>
+          <h3 class="frame_heading large-blur">Frame Heading</h3>
+          <div class="full-width is--thin"></div>
+          <p class="frame_text">Frame Text<br></p>
+          <div class="equation-w">
+            <h3 class="function">f(x)</h3>
+            <h3 class="mathsymbols is--noitalic">x</h3>
+            <h3 class="function">g(x)</h3>
+            <h3 class="mathsymbols is--noitalic">x</h3>
+            <div class="power-w">
+              <h3 id="w-node-_94775db9-4e56-24c1-a543-2f46507fe788-1987b43e" class="function">g</h3>
+              <h4 id="w-node-_94775db9-4e56-24c1-a543-2f46507fe78a-1987b43e" class="math-small-txt is--power">5</h4>
+            </div>
+          </div>
+          <div class="expandable-w">
+            <div class="expandable_close"></div>
+            <div class="frame-w is--expandable">
+              <div class="expandable_panel"></div>
+              <h3 class="frame_heading is--expandable">Testing one two threee</h3>
+              <div class="full-width is--thin"></div>
+              <p class="frame_text">Frame Text<br></p>
+              <div class="frame_note-w is--yellow">
+                <div class="note_heading">Yellow</div>
+                <p class="frame_def-txt">Note Message. </p>
+                <div class="note_panel is--warning"></div>
+              </div>
+              <div class="frame_note-w is--blue">
+                <div class="note_heading">Blue</div>
+                <p class="frame_def-txt">Note Message.</p>
+                <div class="note_panel is--blue"></div>
+              </div>
+              <p class="frame_text">Frame Text<br></p>
+            </div>
+          </div>
+          <div class="frame_note-w is--yellow">
+            <div class="note_heading">Yellow</div>
+            <p class="frame_def-txt">Note Message. </p>
+            <div class="note_panel is--warning"></div>
+          </div>
+          <div class="frame_note-w">
+            <div class="note_heading">Normal </div>
+            <p class="frame_def-txt">Note Message.</p>
+            <div class="note_panel"></div>
+          </div>
+          <a href="#" class="frame_lock-btn w-inline-block"></a>
+        </div>
+        <div class="frame-w is--hidden">
+          <div class="tag-w">
+            <div class="frame_tag">
+              <div>Tag</div>
+            </div>
+            <div class="frame_tag is--pink">x</div>
+          </div>
+          <h3 class="frame_heading large-blur">Frame Heading</h3>
+          <div class="full-width is--thin"></div>
+          <p class="frame_text">Frame Text<br></p>
+          <div class="equation-w">
+            <h3 class="function">f(x)</h3>
+            <h3 class="mathsymbols is--noitalic">x</h3>
+            <h3 class="function">g(x)</h3>
+            <h3 class="mathsymbols is--noitalic">x</h3>
+            <div class="power-w">
+              <h3 id="w-node-_29e56e25-95bc-19b7-142b-a9c31ba91ef0-1987b43e" class="function">g</h3>
+              <h4 id="w-node-_29e56e25-95bc-19b7-142b-a9c31ba91ef2-1987b43e" class="math-small-txt is--power">5</h4>
+            </div>
+          </div>
+          <div class="expandable-w">
+            <div class="expandable_close"></div>
+            <div class="frame-w is--expandable">
+              <div class="expandable_panel"></div>
+              <h3 class="frame_heading is--expandable">Testing one two threee</h3>
+              <div class="full-width is--thin"></div>
+              <p class="frame_text">Frame Text<br></p>
+              <div class="frame_note-w is--yellow">
+                <div class="note_heading">Yellow</div>
+                <p class="frame_def-txt">Note Message. </p>
+                <div class="note_panel is--warning"></div>
+              </div>
+              <div class="frame_note-w is--blue">
+                <div class="note_heading">Blue</div>
+                <p class="frame_def-txt">Note Message.</p>
+                <div class="note_panel is--blue"></div>
+              </div>
+              <p class="frame_text">Frame Text<br></p>
+            </div>
+          </div>
+          <div class="frame_note-w is--yellow">
+            <div class="note_heading">Yellow</div>
+            <p class="frame_def-txt">Note Message. </p>
+            <div class="note_panel is--warning"></div>
+          </div>
+          <div class="frame_note-w">
+            <div class="note_heading">Normal </div>
+            <p class="frame_def-txt">Note Message.</p>
+            <div class="note_panel"></div>
+          </div>
+          <a href="#" class="frame_lock-btn w-inline-block"></a>
+        </div>
+        <div class="frame-w is--hidden">
+          <div class="tag-w">
+            <div class="frame_tag">
+              <div>Tag</div>
+            </div>
+            <div class="frame_tag is--pink">x</div>
+          </div>
+          <h3 class="frame_heading large-blur">Frame Heading</h3>
+          <div class="full-width is--thin"></div>
+          <p class="frame_text">Frame Text<br></p>
+          <div class="equation-w">
+            <h3 class="function">f(x)</h3>
+            <h3 class="mathsymbols is--noitalic">x</h3>
+            <h3 class="function">g(x)</h3>
+            <h3 class="mathsymbols is--noitalic">x</h3>
+            <div class="power-w">
+              <h3 id="w-node-f3726fcf-a6d4-bec4-5f38-ea7290389ddb-1987b43e" class="function">g</h3>
+              <h4 id="w-node-f3726fcf-a6d4-bec4-5f38-ea7290389ddd-1987b43e" class="math-small-txt is--power">5</h4>
+            </div>
+          </div>
+          <div class="expandable-w">
+            <div class="expandable_close"></div>
+            <div class="frame-w is--expandable">
+              <div class="expandable_panel"></div>
+              <h3 class="frame_heading is--expandable">Testing one two threee</h3>
+              <div class="full-width is--thin"></div>
+              <p class="frame_text">Frame Text<br></p>
+              <div class="frame_note-w is--yellow">
+                <div class="note_heading">Yellow</div>
+                <p class="frame_def-txt">Note Message. </p>
+                <div class="note_panel is--warning"></div>
+              </div>
+              <div class="frame_note-w is--blue">
+                <div class="note_heading">Blue</div>
+                <p class="frame_def-txt">Note Message.</p>
+                <div class="note_panel is--blue"></div>
+              </div>
+              <p class="frame_text">Frame Text<br></p>
+            </div>
+          </div>
+          <div class="frame_note-w is--yellow">
+            <div class="note_heading">Yellow</div>
+            <p class="frame_def-txt">Note Message. </p>
+            <div class="note_panel is--warning"></div>
+          </div>
+          <div class="frame_note-w">
+            <div class="note_heading">Normal </div>
+            <p class="frame_def-txt">Note Message.</p>
+            <div class="note_panel"></div>
+          </div>
+          <a href="#" class="frame_lock-btn w-inline-block"></a>
+        </div>
+      </div>
+      <div data-w-id="f9884a40-502e-b679-cac3-bff0fefc2e96" class="is--state-holder is--active">
+        <div id="jack-production" class="framerep">
+          <div class="state-w is--solid-border">
+            <div class="framerep-name"><img src="images/font-2.svg" loading="lazy" alt="name icon" class="icon-img is--xsmall">
+              <h6 class="is--text-color">frame_name</h6>
+            </div>
+            <div class="transformation-w"><img src="images/function-2.svg" loading="lazy" alt="icon for representing mathematical functions" class="icon-img is--xxlarge">
+              <div class="text is--highlighted is--center is--text-color">1-12</div>
+              <div class="text is--text-color">f(x)=x^2</div>
+              <h6 id="w-node-_0031e40b-c47a-4f61-b000-bc114d1c0096-1987b43e" class="is--text-color">Select: Default</h6>
+            </div>
+            <div class="transformation-w"><img src="images/button.svg" loading="lazy" alt="icon representing a dot" class="icon-img is--xxlarge">
+              <div class="text is--highlighted is--center is--text-color">1-12</div>
+              <div class="text is--text-color">f(x)=x^2</div>
+              <h6 id="w-node-_0031e40b-c47a-4f61-b000-bc114d1c009e-1987b43e" class="is--text-color">Label: True</h6>
+            </div>
+            <div class="transformation-w is--expactive"><img src="images/slide.svg" loading="lazy" alt="icon representing a slider" class="icon-img is--xxlarge slider">
+              <div class="text is--highlighted is--center is--text-color">1-12</div>
+              <div class="text is--text-color">f(x)=x^2</div>
+              <h6 id="w-node-_0031e40b-c47a-4f61-b000-bc114d1c00a6-1987b43e" class="is--text-color">SYNC forward</h6>
+            </div>
+            <div class="transformation-w is--flow"><img src="images/slide.svg" loading="lazy" alt="icon representing a slider" class="icon-img is--xxlarge slider">
+              <div class="text is--highlighted is--center is--text-color">1-12</div>
+              <div class="text is--text-color">f(x)=x^2</div>
+              <h6 id="w-node-_0031e40b-c47a-4f61-b000-bc114d1c00ae-1987b43e" class="is--text-color">SYNC forward</h6>
+            </div>
+            <div class="transformation-w is--expactive is--zen"><img src="images/slide.svg" loading="lazy" alt="icon representing a slider" class="icon-img is--xxlarge slider">
+              <div class="text is--highlighted is--center is--text-color">1-12</div>
+              <div class="text is--text-color">f(x)=x^2</div>
+              <h6 id="w-node-_0031e40b-c47a-4f61-b000-bc114d1c00b6-1987b43e" class="is--text-color">SYNC forward</h6>
+            </div>
+            <div class="transformation-w"><img src="images/slide.svg" loading="lazy" alt="icon representing a slider" class="icon-img is--xxlarge slider">
+              <div class="text is--highlighted is--center is--text-color">1-12</div>
+              <div class="text is--text-color">f(x)=x^2</div>
+              <h6 id="w-node-_0031e40b-c47a-4f61-b000-bc114d1c00be-1987b43e" class="is--text-color">SYNC forward</h6>
+            </div>
+            <div class="transformation-w"><img src="images/axis-3.svg" loading="lazy" alt="icon for a X and Y graph" class="icon-img is--xxlarge">
+              <div class="text is--highlighted is--center is--text-color">1-12</div>
+              <div class="text is--text-color">f(x)=x^2</div>
+              <h6 id="w-node-_0031e40b-c47a-4f61-b000-bc114d1c00c6-1987b43e" class="is--text-color">Math Bound</h6>
+            </div>
+            <div class="framerep-name is--flow-hover"><img src="https://uploads-ssl.webflow.com/60942c350ff1b07b8aa747db/60942dda74cbf93e2337c0a7_add.svg" loading="lazy" alt="" class="icon-img is--xsmall">
+              <h6 class="is--text-color">Create Transformation</h6>
+            </div>
+          </div>
+        </div>
+        <div id="jack-production" class="framerep">
+          <div class="state-w is--solid-border">
+            <div class="framerep-name"><img src="images/font-2.svg" loading="lazy" alt="name icon" class="icon-img is--xsmall">
+              <h6 class="is--text-color">frame_name</h6>
+            </div>
+            <div class="transformation-w"><img src="images/function-2.svg" loading="lazy" alt="icon for representing mathematical functions" class="icon-img is--xxlarge">
+              <div class="text is--highlighted is--center is--text-color">1-12</div>
+              <div class="text is--text-color">f(x)=x^2</div>
+              <h6 id="w-node-c7a1aefc-21ea-4741-65eb-4ff74eea05e3-1987b43e" class="is--text-color">Select: Default</h6>
+            </div>
+            <div class="transformation-w"><img src="images/button.svg" loading="lazy" alt="icon representing a dot" class="icon-img is--xxlarge">
+              <div class="text is--highlighted is--center is--text-color">1-12</div>
+              <div class="text is--text-color">f(x)=x^2</div>
+              <h6 id="w-node-c7a1aefc-21ea-4741-65eb-4ff74eea05eb-1987b43e" class="is--text-color">Label: True</h6>
+            </div>
+            <div class="transformation-w is--expactive"><img src="images/slide.svg" loading="lazy" alt="icon representing a slider" class="icon-img is--xxlarge slider">
+              <div class="text is--highlighted is--center is--text-color">1-12</div>
+              <div class="text is--text-color">f(x)=x^2</div>
+              <h6 id="w-node-c7a1aefc-21ea-4741-65eb-4ff74eea05f3-1987b43e" class="is--text-color">SYNC forward</h6>
+            </div>
+            <div class="transformation-w is--flow"><img src="images/slide.svg" loading="lazy" alt="icon representing a slider" class="icon-img is--xxlarge slider">
+              <div class="text is--highlighted is--center is--text-color">1-12</div>
+              <div class="text is--text-color">f(x)=x^2</div>
+              <h6 id="w-node-c7a1aefc-21ea-4741-65eb-4ff74eea05fb-1987b43e" class="is--text-color">SYNC forward</h6>
+            </div>
+            <div class="transformation-w"><img src="images/slide.svg" loading="lazy" alt="icon representing a slider" class="icon-img is--xxlarge slider">
+              <div class="text is--highlighted is--center is--text-color">1-12</div>
+              <div class="text is--text-color">f(x)=x^2</div>
+              <h6 id="w-node-c7a1aefc-21ea-4741-65eb-4ff74eea0603-1987b43e" class="is--text-color">SYNC forward</h6>
+            </div>
+            <div class="transformation-w"><img src="images/slide.svg" loading="lazy" alt="icon representing a slider" class="icon-img is--xxlarge slider">
+              <div class="text is--highlighted is--center is--text-color">1-12</div>
+              <div class="text is--text-color">f(x)=x^2</div>
+              <h6 id="w-node-c7a1aefc-21ea-4741-65eb-4ff74eea060b-1987b43e" class="is--text-color">SYNC forward</h6>
+            </div>
+            <div class="transformation-w"><img src="images/axis-3.svg" loading="lazy" alt="icon for a X and Y graph" class="icon-img is--xxlarge">
+              <div class="text is--highlighted is--center is--text-color">1-12</div>
+              <div class="text is--text-color">f(x)=x^2</div>
+              <h6 id="w-node-c7a1aefc-21ea-4741-65eb-4ff74eea0613-1987b43e" class="is--text-color">Math Bound</h6>
+            </div>
+            <div class="framerep-name is--flow-hover"><img src="https://uploads-ssl.webflow.com/60942c350ff1b07b8aa747db/60942dda74cbf93e2337c0a7_add.svg" loading="lazy" alt="" class="icon-img is--xsmall">
+              <h6 class="is--text-color">Create Transformation</h6>
+            </div>
+          </div>
+        </div>
+        <div id="jack-production" class="framerep">
+          <div class="state-w is--solid-border">
+            <div class="framerep-name"><img src="images/font-2.svg" loading="lazy" alt="name icon" class="icon-img is--xsmall">
+              <h6 class="is--text-color">frame_name</h6>
+            </div>
+            <div class="transformation-w"><img src="images/function-2.svg" loading="lazy" alt="icon for representing mathematical functions" class="icon-img is--xxlarge">
+              <div class="text is--highlighted is--center is--text-color">1-12</div>
+              <div class="text is--text-color">f(x)=x^2</div>
+              <h6 id="w-node-_8633617d-8c8e-7a4d-9e09-d9c523c44994-1987b43e" class="is--text-color">Select: Default</h6>
+            </div>
+            <div class="transformation-w"><img src="images/button.svg" loading="lazy" alt="icon representing a dot" class="icon-img is--xxlarge">
+              <div class="text is--highlighted is--center is--text-color">1-12</div>
+              <div class="text is--text-color">f(x)=x^2</div>
+              <h6 id="w-node-_8633617d-8c8e-7a4d-9e09-d9c523c4499c-1987b43e" class="is--text-color">Label: True</h6>
+            </div>
+            <div class="transformation-w is--expactive"><img src="images/slide.svg" loading="lazy" alt="icon representing a slider" class="icon-img is--xxlarge slider">
+              <div class="text is--highlighted is--center is--text-color">1-12</div>
+              <div class="text is--text-color">f(x)=x^2</div>
+              <h6 id="w-node-_8633617d-8c8e-7a4d-9e09-d9c523c449a4-1987b43e" class="is--text-color">SYNC forward</h6>
+            </div>
+            <div class="transformation-w is--flow"><img src="images/slide.svg" loading="lazy" alt="icon representing a slider" class="icon-img is--xxlarge slider">
+              <div class="text is--highlighted is--center is--text-color">1-12</div>
+              <div class="text is--text-color">f(x)=x^2</div>
+              <h6 id="w-node-_8633617d-8c8e-7a4d-9e09-d9c523c449ac-1987b43e" class="is--text-color">SYNC forward</h6>
+            </div>
+            <div class="transformation-w"><img src="images/slide.svg" loading="lazy" alt="icon representing a slider" class="icon-img is--xxlarge slider">
+              <div class="text is--highlighted is--center is--text-color">1-12</div>
+              <div class="text is--text-color">f(x)=x^2</div>
+              <h6 id="w-node-_8633617d-8c8e-7a4d-9e09-d9c523c449b4-1987b43e" class="is--text-color">SYNC forward</h6>
+            </div>
+            <div class="transformation-w"><img src="images/slide.svg" loading="lazy" alt="icon representing a slider" class="icon-img is--xxlarge slider">
+              <div class="text is--highlighted is--center is--text-color">1-12</div>
+              <div class="text is--text-color">f(x)=x^2</div>
+              <h6 id="w-node-_8633617d-8c8e-7a4d-9e09-d9c523c449bc-1987b43e" class="is--text-color">SYNC forward</h6>
+            </div>
+            <div class="transformation-w"><img src="images/axis-3.svg" loading="lazy" alt="icon for a X and Y graph" class="icon-img is--xxlarge">
+              <div class="text is--highlighted is--center is--text-color">1-12</div>
+              <div class="text is--text-color">f(x)=x^2</div>
+              <h6 id="w-node-_8633617d-8c8e-7a4d-9e09-d9c523c449c4-1987b43e" class="is--text-color">Math Bound</h6>
+            </div>
+            <div class="framerep-name is--flow-hover"><img src="https://uploads-ssl.webflow.com/60942c350ff1b07b8aa747db/60942dda74cbf93e2337c0a7_add.svg" loading="lazy" alt="" class="icon-img is--xsmall">
+              <h6 class="is--text-color">Create Transformation</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="transformation_dropdown section--bg-color large-blur is--solid-border">
+        <h5 class="is--center is--text-color is--btm-margin">Selected Transformation:  </h5>
+        <div class="transformation-form-block w-form">
+          <form id="email-form" name="email-form" data-name="Email Form" method="get" class="tranformation-form is--2">
+            <div data-hover="false" data-delay="0" class="dropdown-w w-dropdown">
+              <div class="dropdown is--border is--text-color w-dropdown-toggle">
+                <div class="text">Desmos_id</div><img src="images/menu-3.svg" loading="lazy" width="25" alt="icon for components" class="icon-img">
+              </div>
+              <nav class="dropdown-list w-dropdown-list">
+                <a href="#" class="dropdown-link w-dropdown-link">Comp_id1</a>
+                <a href="#" class="dropdown-link w-dropdown-link">Comp_id2</a>
+                <a href="#" class="dropdown-link w-dropdown-link">Comp_id3</a>
+                <a href="#" class="dropdown-link w-dropdown-link">Canvas-bound</a>
+              </nav>
+            </div>
+            <div data-hover="false" data-delay="0" class="dropdown-w w-dropdown">
+              <div class="dropdown is--border is--text-color w-dropdown-toggle">
+                <div class="text">Comp_id</div><img src="images/3d.svg" loading="lazy" width="25" alt="cube icon" class="icon-img">
+              </div>
+              <nav class="dropdown-list w-dropdown-list">
+                <a href="#" class="dropdown-link w-dropdown-link">Comp_id1</a>
+                <a href="#" class="dropdown-link w-dropdown-link">Comp_id2</a>
+                <a href="#" class="dropdown-link w-dropdown-link">Comp_id3</a>
+                <a href="#" class="dropdown-link w-dropdown-link">Canvas-bound</a>
+              </nav>
+            </div>
+            <div data-hover="false" data-delay="0" class="dropdown-w w-dropdown">
+              <div class="dropdown is--border is--text-color w-dropdown-toggle">
+                <div class="text">Attribute</div><img src="images/move-2.svg" loading="lazy" width="25" alt="icon for transformations" class="icon-img">
+              </div>
+              <nav class="dropdown-list w-dropdown-list">
+                <a href="#" class="dropdown-link w-dropdown-link">Hidden</a>
+                <a href="#" class="dropdown-link w-dropdown-link">Color</a>
+                <a href="#" class="dropdown-link w-dropdown-link">Select</a>
+                <a href="#" class="dropdown-link w-dropdown-link">Custom</a>
+                <a href="#" class="dropdown-link w-dropdown-link">Deselect</a>
+              </nav>
+            </div>
+            <div data-hover="false" data-delay="0" class="dropdown-w w-dropdown">
+              <div class="dropdown is--border is--text-color w-dropdown-toggle">
+                <div class="text">Attribute</div><img src="images/key.svg" loading="lazy" width="25" alt="icon for a key" class="icon-img">
+              </div>
+              <nav class="dropdown-list w-dropdown-list">
+                <a href="#" class="dropdown-link w-dropdown-link">Hidden</a>
+                <a href="#" class="dropdown-link w-dropdown-link">Color</a>
+                <a href="#" class="dropdown-link w-dropdown-link">Select</a>
+                <a href="#" class="dropdown-link w-dropdown-link">Custom</a>
+                <a href="#" class="dropdown-link w-dropdown-link">Deselect</a>
+              </nav>
+            </div>
+          </form>
+          <div class="w-form-done">
+            <div>Thank you! Your submission has been received!</div>
+          </div>
+          <div class="w-form-fail">
+            <div>Oops! Something went wrong while submitting the form.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fullheightline is--right-margin is--left-margin section--bg-color"></div>
+    <div id="w-node-f9884a40-502e-b679-cac3-bff0fefc2fb1-1987b43e" class="canvas-w">
+      <div class="desmos_comp-w">
+        <div class="desmos_comp-menu-close"></div>
+        <div class="desmos_comp-menu">
+          <a id="createDesmosCompBtn" href="#" class="button-2 is--large is--bottom-margin w-button">Create Custom Component</a>
+          <div class="fullwidthline-2 is--thin"></div>
+          <h3 class="is--center is--bottom-margin">Most Relevant</h3>
+          <div id="inverse" class="desmos_comp-item">
+            <div class="desmos_comp-tags-w">
+              <div class="text-block-11">1 Expression</div>
+              <div class="text-block-12">General</div>
+            </div>
+            <h4 id="w-node-f9884a40-502e-b679-cac3-bff0fefc2fc0-1987b43e">Simple Inverse Function</h4>
+            <div id="w-node-f9884a40-502e-b679-cac3-bff0fefc2fc2-1987b43e">In mathematics, an inverse function is a function that &quot;reverses&quot; another function: if the function f applied to an input x gives a result of y, then applying its inverse function g to y gives the result x, i.e., g(y) = x if and only if f(x) = y.</div>
+          </div>
+          <div id="parabola" class="desmos_comp-item">
+            <div class="desmos_comp-tags-w">
+              <div class="text-block-11">1 Expression</div>
+              <div class="text-block-12">General</div>
+            </div>
+            <h4 id="w-node-f9884a40-502e-b679-cac3-bff0fefc2fca-1987b43e">Parabola</h4>
+            <div id="w-node-f9884a40-502e-b679-cac3-bff0fefc2fcc-1987b43e">In mathematics, a parabola is a plane curve which is mirror-symmetrical and is approximately U-shaped.</div>
+          </div>
+          <div id="tangent2" class="desmos_comp-item">
+            <div class="desmos_comp-tags-w">
+              <div class="text-block-11 is--dependant">2 Expression</div>
+              <div class="text-block-12 is--utility">Utility</div>
+            </div>
+            <h4 id="w-node-f9884a40-502e-b679-cac3-bff0fefc2fd4-1987b43e">Tangent</h4>
+            <div id="w-node-f9884a40-502e-b679-cac3-bff0fefc2fd6-1987b43e">In geometry, the tangent line to a plane curve at a given point is the straight line that &quot;just touches&quot; the curve at that point.</div>
+          </div>
+          <div id="integral" class="desmos_comp-item">
+            <div class="desmos_comp-tags-w">
+              <div class="text-block-11 is--dependant">3 Expression</div>
+              <div class="text-block-12 is--utility">Utility</div>
+            </div>
+            <h4 id="w-node-f9884a40-502e-b679-cac3-bff0fefc2fde-1987b43e">Area/Integral</h4>
+            <div id="w-node-f9884a40-502e-b679-cac3-bff0fefc2fe0-1987b43e">In mathematics, an integral assigns numbers to functions in a way that describes displacement, area, volume, and other concepts that arise by combining infinitesimal data. The process of finding integrals is called integration.</div>
+          </div>
+        </div>
+        <div class="desmos_comp-create">
+          <div class="w-form">
+            <form id="desmosCompForm" name="email-form-2" data-name="Email Form 2" method="get" class="desmos-comp-form">
+              <h3 class="is--center">General Info</h3>
+              <div class="fullwidthline-2 is--thin"></div><input type="text" class="input-field w-input" maxlength="256" name="Name" data-name="Name" placeholder="Name" id="Name"><textarea data-name="Description" maxlength="5000" id="Description" name="Description" placeholder="Component Description" class="input-field is--text-area w-input"></textarea>
+              <div data-hover="false" data-delay="0" class="dropdown-w w-dropdown">
+                <div class="dropdown w-dropdown-toggle">
+                  <div class="w-icon-dropdown-toggle"></div>
+                  <h4>Component Type</h4>
+                </div>
+                <nav class="dropdown-list w-dropdown-list">
+                  <a href="#" class="dropdown-link w-dropdown-link">Data</a>
+                  <a href="#" class="dropdown-link w-dropdown-link">Function</a>
+                  <a href="#" class="dropdown-link w-dropdown-link">Utility</a>
+                </nav>
+              </div>
+              <h3 class="is--center">Select Expressions</h3>
+              <div class="fullwidthline-2 is--thin"></div>
+              <div id="compSelectExprWrap" class="wrapper is--vertical-grid">
+                <div class="select-comp-expression">
+                  <div class="latex-render w-embed">
+                    <div id="answer"></div>
+                  </div>
+                  <div class="comp_expr-select"></div>
+                </div><label class="w-checkbox checkbox-field"><input type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox" class="w-checkbox-input"><span class="w-form-label" for="checkbox">Expression dependant on another expression</span></label>
+                <div data-hover="false" data-delay="0" class="dropdown-w w-dropdown">
+                  <div class="dropdown w-dropdown-toggle">
+                    <div class="w-icon-dropdown-toggle"></div>
+                    <h4>Select Dependancy</h4>
+                  </div>
+                  <nav class="dropdown-list w-dropdown-list">
+                    <a href="#" class="dropdown-link w-dropdown-link">Data</a>
+                    <a href="#" class="dropdown-link w-dropdown-link">Function</a>
+                    <a href="#" class="dropdown-link w-dropdown-link">Utility</a>
+                  </nav>
+                </div><input type="text" class="input-field is--template-border w-input" maxlength="256" name="latex" data-name="Latex" placeholder="Select dependant character" id="latex">
+              </div><input type="submit" value="Submit" data-wait="Please wait..." id="w-node-f9884a40-502e-b679-cac3-bff0fefc300e-1987b43e" class="button-2 is--large w-button">
+            </form>
+            <div class="w-form-done">
+              <div>Thank you! Your submission has been received!</div>
+            </div>
+            <div class="w-form-fail">
+              <div>Oops! Something went wrong while submitting the form.</div>
+            </div>
+          </div>
+        </div>
+        <form action="/search" class="desmos_search-w w-form"><input type="search" class="desmos_comp-search w-input" maxlength="256" name="query" placeholder="Desmos Expressions" id="search" required=""><input type="submit" value="" class="search_button-4 w-button"></form>
+        <div class="form_block w-form">
+          <form id="email-form" name="email-form" data-name="Email Form" method="get" class="search_form is--solid-border"><img src="images/magnifying-glass.svg" loading="lazy" alt="Search icon
+" class="icon-img"><input type="text" class="input is--text-color w-input" maxlength="256" name="name-2" data-name="Name 2" placeholder="Desmos Expressions" id="name-2"></form>
+          <div class="w-form-done">
+            <div>Thank you! Your submission has been received!</div>
+          </div>
+          <div class="w-form-fail">
+            <div>Oops! Something went wrong while submitting the form.</div>
+          </div>
+        </div>
+      </div>
+      <div class="canvas-inst large-blur">
+        <div>Select the expression in which you want to add tangent for.</div>
+      </div>
+      <div class="desmos_embed-w">
+        <div id="calculator" class="desmos_embed w-embed w-script">
+          <div>
+            <canvas width="100%" id="myChart"></canvas>
+          </div>
+          <script>
+  // === include 'setup' then 'config' above ===
+</script>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="w-embed">
+    <style>
+@media only screen and (min-width: 1380px) {
+     body {font-size: 13.8px;}
+}
+.desmos_embed{
+height: calc(100vh - 11.5vw);
+}
+@media only screen and (max-width: 1440px)  {
+	.desmos_embed{height: calc(100vh - 7.5vw)};
+  }
+}
+	.blur {
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  }
+  .large-blur {
+  -webkit-backdrop-filter: blur(35px);
+  backdrop-filter: blur(35px);
+  }
+</style>
+  </div>
+  <div class="mobile-portrait-w section--bg-color large-blur">
+    <div data-w-id="ee5c751e-2e5e-8e71-f260-c89390f2c837" data-animation-type="lottie" data-src="documents/lf30_editor_h3zeexme.json" data-loop="1" data-direction="1" data-autoplay="1" data-is-ix2-target="0" data-renderer="svg" data-default-duration="2.7" data-duration="0"></div>
+    <h1 class="is--text-color is--btm-margin">Rotate Phone</h1>
+    <p class="paragraph is--text-color is--center">For the best experience, please rotate your phone to the landscape format. </p>
+  </div>
+  <div class="poster-w">
+    <div class="lobj-w section--bg-color large-blur">
+      <h1 class="is--text-color is--center">Learning Objective 1: <br>Production Possibility Frontier</h1>
+      <p id="w-node-_2c75f625-2764-6598-19b8-8a79e9edad1e-1987b43e" class="paragraph is--text-color is--center">In this learning objective, you will learn about how production possibility curves outline the production options for a single economy. You&#x27;ll learn about the role of economic growth, opportunity cost, and technological constraints that contribute to the PPF</p>
+      <div id="w-node-_2c75f625-2764-6598-19b8-8a79e9edad19-1987b43e" class="frame-outline">
+        <a href="#" class="frame-anchor is--text-color w-inline-block">
+          <div class="text _1line-invsbl is--weight700">1. Total Revenue, Cost and Profit<br></div>
+        </a>
+        <a href="#" class="frame-anchor is--text-color w-inline-block">
+          <div class="text _1line-invsbl is--weight700">1. Total Revenue, Cost and Profit 1. Total Revenue, Cost and Profit<br></div>
+        </a>
+        <a href="#" class="frame-anchor is--text-color w-inline-block">
+          <div class="text _1line-invsbl is--weight700">1. Total Revenue, Cost and Profit<br></div>
+        </a>
+        <a href="#" class="frame-anchor is--text-color w-inline-block">
+          <div class="text _1line-invsbl is--weight700">1. Total Revenue, Cost and Profit 1. Total Revenue, Cost and Profit<br></div>
+        </a>
+        <a href="#" class="frame-anchor is--text-color w-inline-block">
+          <div class="text _1line-invsbl is--weight700">1. Total Revenue, Cost and Profit 1. Total Revenue, Cost and Profit<br></div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="chartjs_data-table section--bg-color large-blur w-form">
+    <form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get" class="chartjs_data-flex">
+      <div class="customization_form is--solid-border solid--bg-color">
+        <h3 class="is--center is--text-color">Heading</h3><select id="pointStyle" name="type-2" data-name="Type 2" class="dropdown is--text-color is--border w-select">
+          <option value="circle">Circle</option>
+          <option value="triangle">Triangle</option>
+          <option value="rect">Rectangle</option>
+          <option value="rectRounded"> Rounded Rectangle</option>
+          <option value="rectRot">Diamond</option>
+          <option value="cross">Plus</option>
+          <option value="crossRoct">Cross</option>
+          <option value="star">Star</option>
+        </select>
+        <div class="switch-holder">
+          <div class="text is--text-color is--weight700 is--right-margin">Fill:<br></div>
+          <div class="text is--text-color is--right-margin is--left-margin">True<br></div>
+          <div class="switch-w">
+            <div class="switch_indicator"></div>
+          </div>
+          <div class="text is--text-color is--left-margin">False<br></div>
+        </div><input type="text" class="input is--text-color is--border w-input" maxlength="256" name="borderColor-2" data-name="Border Color 2" placeholder="Border Color" id="borderColor-2" required="">
+        <div class="switch-holder">
+          <div class="text is--text-color is--weight700 is--right-margin">steppedLine:<br></div>
+          <div class="text is--text-color is--right-margin is--left-margin">True<br></div>
+          <div class="switch-w">
+            <div class="switch_indicator"></div>
+          </div>
+          <div class="text is--text-color is--left-margin">False<br></div>
+        </div><input type="text" class="input is--text-color is--border w-input" maxlength="256" name="bgColor-2" data-name="Bg Color 2" placeholder="Background Color" id="bgColor-2" required=""><input type="text" class="input is--text-color is--border w-input" maxlength="256" name="tension-2" data-name="Tension 2" placeholder="Tension" id="tension-2" required=""><input type="text" class="input is--text-color is--border w-input" maxlength="256" name="borderWidth-2" data-name="Border Width 2" placeholder="Border Width" id="borderWidth-2" required="">
+        <div class="switch-holder">
+          <div class="text is--text-color is--weight700 is--right-margin">Dashed:(borderDash: [10, 5],)<br></div>
+          <div class="text is--text-color is--right-margin is--left-margin">True<br></div>
+          <div class="switch-w">
+            <div class="switch_indicator"></div>
+          </div>
+          <div class="text is--text-color is--left-margin">False<br></div>
+        </div><input type="text" class="input is--text-color is--border w-input" maxlength="256" name="pointRadius-2" data-name="Point Radius 2" placeholder="Point Size" id="pointRadius-2" required="">
+        <div class="color-picker-w is--top-margin">
+          <a href="#" class="color-output is--right-margin is--border w-inline-block"></a><input type="text" class="input is--text-color is--border w-input" maxlength="256" name="borderColor-2" data-name="Border Color 2" placeholder="Border Color" id="colorInput" required="">
+          <div class="w-embed w-script">
+            <script>
+var colorValue1
+var colorValue2
+var boxPicker = new iro.ColorPicker("#boxPicker", {
+  width: 250,
+  colors: [
+    'rgb(100%, 0, 0)', // pure red
+    'rgb(0, 100%, 0)', // pure green
+  ],
+  layout: [
+    {
+      component: iro.ui.Box,
+    },
+    {
+      component: iro.ui.Slider,
+      options: {
+        sliderType: 'alpha'
+      }
+    },
+    {
+      component: iro.ui.Slider,
+      options: {
+        id: 'hue-slider',
+        sliderType: 'hue'
+      }
+    }
+  ]
+});
+document.addEventListener("DOMContentLoaded", function(){
+    document.querySelector('.color-output').addEventListener('click', () => {
+    document.querySelector('#boxPicker').style.display = "flex";
+  }); 
+  // listen to a color picker's color:change event
+  // color:change callbacks receive the current color
+  boxPicker.on(['color:init', 'color:change','mount'], function(color) {
+    // log the current color as a HEX string
+    colorValue1 = boxPicker.colors[0].rgbaString
+    colorValue2 = boxPicker.colors[1].rgbaString
+    document.querySelector('#colorOutput').style.backgroundImage = 'linear-gradient(to right,'+colorValue1 + ',' + colorValue2
+    //console.log(color.rgbaString);
+  });
+  document.querySelector('#colorSelect').addEventListener('click', () => {
+    document.querySelector('#boxPicker').style.display = "none";
+    document.querySelector('#colorInput').value = colorValue1
+    document.querySelector('.color-output').style.backgroundImage = 'linear-gradient(to right,'+colorValue1 + ',' + colorValue2
+  }); 
+});
+//var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+//gradient.addColorStop(0, colorValue1);   
+//gradient.addColorStop(1, colorValue2);
+</script>
+          </div>
+          <div id="boxPicker" class="iro-colorpicker">
+            <div class="colorsubmit-w is--btm-margin">
+              <div id="colorOutput" class="gradient-outputext is--right-margin is--border"></div>
+              <a id="colorSelect" href="#" class="button is--small w-button">Submit</a>
+            </div>
+          </div>
+        </div>
+        <div class="color-picker-w is--top-margin">
+          <a href="#" class="color-output is--right-margin is--border w-inline-block"></a>
+          <div class="w-embed w-script">
+            <script>
+var colorValue1
+var colorValue2
+var boxPicker = new iro.ColorPicker("#boxPicker", {
+  width: 250,
+  colors: [
+    'rgb(100%, 0, 0)', // pure red
+    'rgb(0, 100%, 0)', // pure green
+  ],
+  layout: [
+    {
+      component: iro.ui.Box,
+    },
+    {
+      component: iro.ui.Slider,
+      options: {
+        sliderType: 'alpha'
+      }
+    },
+    {
+      component: iro.ui.Slider,
+      options: {
+        id: 'hue-slider',
+        sliderType: 'hue'
+      }
+    }
+  ]
+});
+document.addEventListener("DOMContentLoaded", function(){
+    document.querySelector('.color-output').addEventListener('click', () => {
+    document.querySelector('#boxPicker').style.display = "flex";
+  }); 
+  // listen to a color picker's color:change event
+  // color:change callbacks receive the current color
+  boxPicker.on(['color:init', 'color:change','mount'], function(color) {
+    // log the current color as a HEX string
+    colorValue1 = boxPicker.colors[0].rgbaString
+    colorValue2 = boxPicker.colors[1].rgbaString
+    document.querySelector('#colorOutput').style.backgroundImage = 'linear-gradient(to right,'+colorValue1 + ',' + colorValue2
+    //console.log(color.rgbaString);
+  });
+  document.querySelector('#colorSelect').addEventListener('click', () => {
+    document.querySelector('#boxPicker').style.display = "none";
+    document.querySelector('#colorInput').value = colorValue1
+    document.querySelector('.color-output').style.backgroundImage = 'linear-gradient(to right,'+colorValue1 + ',' + colorValue2
+  }); 
+});
+//var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+//gradient.addColorStop(0, colorValue1);   
+//gradient.addColorStop(1, colorValue2);
+</script>
+          </div>
+          <div id="boxPicker" class="iro-colorpicker">
+            <div class="colorsubmit-w is--btm-margin">
+              <div id="colorOutput" class="gradient-outputext is--right-margin is--border"></div>
+              <a id="colorSelect" href="#" class="button is--small w-button">Submit</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chartjs_config-w is--right-margin">
+        <h3 class="is--center is--text-color">Chart Name</h3><select id="chartType" name="type" data-name="type" class="text dropdown is--text-color is--border is--center w-select">
+          <option value="line">Line Chart Type</option>
+          <option value="bar">Vertical Bar Chart</option>
+          <option value="horizontalBar">Horizontal Bar Chart</option>
+          <option value="doughnut">Doughnut Chart</option>
+          <option value="pie">Pie Chart</option>
+          <option value="radar">Radar Chart</option>
+          <option value="bubble">Bubble Chart</option>
+          <option value="polarArea">Polar Area Chart</option>
+        </select>
+        <div class="fullwidthline is--thin"></div><select data-name="dataSet" name="dataSet" id="axisType" class="text dropdown is--text-color is--border is--center w-select">
+          <option value="1x1y">1 X-axis and 1 Y-axis</option>
+          <option value="2x1y">2 X-axis and 1 Y-axis</option>
+          <option value="1x2y">1 X-axis and 2 Y-axis</option>
+          <option value="2x2y">2 X-axis and 2 Y-axis</option>
+        </select>
+        <div id="axisTable" class="state-w is--solid-border">
+          <div class="framerep-name"><img src="images/font-2.svg" loading="lazy" alt="name icon" class="icon-img is--xsmall">
+            <h6 class="is--text-color">X-Axis</h6>
+          </div>
+          <div class="customization-w is--axis"><img src="images/axis-3.svg" loading="lazy" alt="icon for a X and Y graph" class="icon-img is--xxlarge">
+            <h6 class="is--text-color">xAxisBottom</h6>
+          </div>
+          <div class="framerep-name"><img src="images/font-2.svg" loading="lazy" alt="name icon" class="icon-img is--xsmall">
+            <h6 class="is--text-color">Y-Axis</h6>
+          </div>
+          <div class="customization-w is--axis"><img src="images/axis-3.svg" loading="lazy" alt="icon for a X and Y graph" class="icon-img is--xxlarge">
+            <h6 class="is--text-color">yAxisLeft</h6>
+          </div>
+        </div>
+        <div class="fullwidthline is--thin"></div>
+        <a id="chartUpdate" href="#" class="button is--peace w-button">Update Chart</a>
+      </div>
+      <div class="chartjs_config-w is--right-margin">
+        <h3 class="is--center is--text-color">Dataset Name</h3><select data-name="Data Set 2" name="dataSet-2" id="dataSet-2" class="text dropdown is--text-color is--border is--center w-select">
+          <option value="axisName">Axis Name</option>
+        </select>
+        <div class="fullwidthline is--thin"></div>
+        <div>
+          <div class="state-w is--solid-border">
+            <div class="framerep-name"><img src="images/font-2.svg" loading="lazy" alt="name icon" class="icon-img is--xsmall">
+              <h6 class="is--text-color">Customizations</h6>
+            </div>
+            <div class="customization-w"><img src="images/function-2.svg" loading="lazy" alt="icon for representing mathematical functions" class="icon-img is--xxlarge">
+              <h6 class="is--text-color">Point Size</h6>
+              <div class="text is--text-color">f(x)=x^2</div>
+            </div>
+            <div class="customization-w"><img src="images/slide.svg" loading="lazy" alt="icon representing a slider" class="icon-img is--xxlarge slider">
+              <h6 class="is--text-color">Point Styles</h6>
+              <div class="text is--text-color">f(x)=x^2</div>
+            </div>
+            <div class="customization-w"><img src="images/function-2.svg" loading="lazy" alt="icon for representing mathematical functions" class="icon-img is--xxlarge">
+              <h6 class="is--text-color">Dashed</h6>
+              <div class="text is--text-color">f(x)=x^2</div>
+            </div>
+            <div class="customization-w is--peace"><img src="images/function-2.svg" loading="lazy" alt="icon for representing mathematical functions" class="icon-img is--xxlarge">
+              <h6 class="is--text-color">Border Width</h6>
+              <div class="text is--text-color">f(x)=x^2</div>
+            </div>
+            <div class="customization-w"><img src="images/function-2.svg" loading="lazy" alt="icon for representing mathematical functions" class="icon-img is--xxlarge">
+              <h6 class="is--text-color">Tension</h6>
+              <div class="text is--text-color">f(x)=x^2</div>
+            </div>
+            <div class="customization-w"><img src="images/function-2.svg" loading="lazy" alt="icon for representing mathematical functions" class="icon-img is--xxlarge">
+              <h6 class="is--text-color">Stepped Line</h6>
+              <div class="text is--text-color">f(x)=x^2</div>
+            </div>
+            <div class="customization-w"><img src="images/function-2.svg" loading="lazy" alt="icon for representing mathematical functions" class="icon-img is--xxlarge">
+              <h6 class="is--text-color">Background color</h6>
+              <div class="text is--text-color">f(x)=x^2</div>
+            </div>
+            <div class="customization-w"><img src="images/function-2.svg" loading="lazy" alt="icon for representing mathematical functions" class="icon-img is--xxlarge">
+              <h6 class="is--text-color">Border Color</h6>
+              <div class="text is--text-color">f(x)=x^2</div>
+            </div>
+            <div class="customization-w"><img src="images/function-2.svg" loading="lazy" alt="icon for representing mathematical functions" class="icon-img is--xxlarge">
+              <h6 class="is--text-color">Fill</h6>
+              <div class="text is--text-color">f(x)=x^2</div>
+            </div>
+          </div>
+        </div>
+        <div class="chartjs_settings is--border"></div>
+      </div>
+      <div id="table" class="table-grid is--left-margin">
+        <div id="w-node-fa07a376-e7cb-f5c7-3748-a3059dea47ef-1987b43e"></div>
+        <div></div>
+        <div class="table_selector is--column is--border is--table"></div>
+        <div class="table_selector is--column is--border is--table"></div>
+        <div class="table_selector is--column is--border is--table"></div>
+        <div></div>
+        <div class="table_cell is--border is--table"></div>
+        <div class="table_cell is--border is--table"><input type="text" class="input is--text-color is--solid-border is--weight700 w-input" maxlength="256" name="columnLabel" data-name="columnLabel" placeholder="Column Label" id="columnLabel" required=""></div>
+        <div class="table_cell is--border is--table"><input type="text" class="input is--text-color is--solid-border is--weight700 w-input" maxlength="256" name="columnLabel-4" data-name="Column Label 4" placeholder="Column Label" id="columnLabel-4" required=""></div>
+        <div class="table_cell is--border is--table"><input type="text" class="input is--text-color is--solid-border is--weight700 w-input" maxlength="256" name="columnLabel-4" data-name="Column Label 4" placeholder="Column Label" id="columnLabel-4" required=""></div>
+        <div class="table_selector is--row is--border is--table"></div>
+        <div class="table_cell is--border is--table"><input type="text" class="input is--text-color is--solid-border is--weight700 w-input" maxlength="256" name="label-2" data-name="Label 2" placeholder="Dataset Label" id="label-2" required=""></div>
+        <div class="table_cell is--border is--table"><input type="text" class="input is--text-color is--border w-input" maxlength="256" name="label-6" data-name="Label 6" placeholder="Data" id="label-6" required=""></div>
+        <div class="table_cell is--border is--table"><input type="text" class="input is--text-color is--border w-input" maxlength="256" name="Data" data-name="Data" placeholder="Data" id="Data" required=""></div>
+        <div class="table_cell is--border is--table"><input type="text" class="input is--text-color is--border w-input" maxlength="256" name="Data-4" data-name="Data 4" placeholder="Data" id="Data-4" required=""></div>
+        <div class="table_selector is--row is--border is--table"></div>
+        <div class="table_cell is--border is--table"><input type="text" class="input is--text-color is--solid-border is--weight700 w-input" maxlength="256" name="label-2" data-name="Label 2" placeholder="Dataset Label" id="label-2" required=""></div>
+        <div class="table_cell is--border is--table"><input type="text" class="input is--text-color is--border w-input" maxlength="256" name="Data-3" data-name="Data 3" placeholder="Data" id="Data-3" required=""></div>
+        <div class="table_cell is--border is--table"><input type="text" class="input is--text-color is--border w-input" maxlength="256" name="Data-2" data-name="Data 2" placeholder="Data" id="Data-2" required=""></div>
+        <div class="table_cell is--border is--table"><input type="text" class="input is--text-color is--border w-input" maxlength="256" name="Data-5" data-name="Data 5" placeholder="Data" id="Data-5" required=""></div>
+      </div>
+    </form>
+    <div class="w-form-done">
+      <div>Thank you! Your submission has been received!</div>
+    </div>
+    <div class="w-form-fail">
+      <div>Oops! Something went wrong while submitting the form.</div>
+    </div>
+  </div>
+  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=61365f53652529080f68048b" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="js/webflow.js" type="text/javascript"></script>
+  <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
+  <script>
+let transitionTrigger = $(".transition-trigger");
+let introDurationMS = 1500;
+let exitDurationMS = 1500;
+let excludedClass = "no-transition";
+// On Page Load
+if (transitionTrigger.length > 0) {
+	transitionTrigger.click();
+	$("body").addClass("no-scroll-transition");
+	setTimeout(() => {$("body").removeClass("no-scroll-transition");}, introDurationMS);
+}
+// On Link Click
+$("a").on("click", function (e) {
+  if ($(this).prop("hostname") == window.location.host && $(this).attr("href").indexOf("#") === -1 &&
+      !$(this).hasClass(excludedClass) && $(this).attr("target") !== "_blank" && transitionTrigger.length > 0) {
+    e.preventDefault();
+		$("body").addClass("no-scroll-transition");
+    let transitionURL = $(this).attr("href");
+    transitionTrigger.click();
+    setTimeout(function () {window.location = transitionURL;}, exitDurationMS);
+  }
+});
+// On Back Button Tap
+window.onpageshow = function(event) {if (event.persisted) {window.location.reload()}};
+// Hide Transition on Window Width Resize
+setTimeout(() => {$(window).on("resize", function () {
+setTimeout(() => {$(".transition").css("display", "none");}, 50);});
+}, introDurationMS);
+</script>
+</body>
+</html>
