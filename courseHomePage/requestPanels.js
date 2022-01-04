@@ -1,10 +1,10 @@
 //to be considered in the future for request status
-export function requestPanel(){
+function requestPanel(){
     document.querySelector(".panel-notif").children[0].children[0].src = 'https://uploads-ssl.webflow.com/61365f53652529080f68048b/614ada26358d8b3fd943a4cb_sand-clock-2.svg'
     document.querySelector(".panel-notif").children[0].children[1].textContent = "Loading..."
     document.querySelector("#panelIn").click()
 }
-export function responsePanel(response){
+function responsePanel(response){
     if (response === 'error'){
         document.querySelector(".panel-notif").children[1].children[0].src = 'https://uploads-ssl.webflow.com/61365f53652529080f68048b/6148c495b215876962df0932_icons8-error-2.svg'
         document.querySelector(".panel-notif").children[1].children[1].textContent = "An error has occured"
