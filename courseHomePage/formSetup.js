@@ -41,10 +41,11 @@ Webflow.push(function() {
         })
         .done((res) => {
             responsePanel("success")
+            console.log("form body reset", formBody)
+            formBody = {}
             courseLoad(courseID)
             removeModal()
-            console.log("formbody reset", formBody)
-            formBody = {}
+
             $form.trigger("reset");
             if (formRedirect) { 
                 window.location = formRedirect; return; 
