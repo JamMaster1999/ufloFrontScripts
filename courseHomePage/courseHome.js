@@ -59,9 +59,6 @@ function closePanel(delay){
     }, delay+500); 
 }
 
-
-
-
 $.ajaxSetup({
     error: function(xhr, status, error) {
         responsePanel("error")
