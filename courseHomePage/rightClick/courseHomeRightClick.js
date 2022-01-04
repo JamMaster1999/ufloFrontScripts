@@ -63,8 +63,6 @@ function deleteAPI(type, id){
     formAction += type + "/" + id
 }
 
-
-
 function editContextClicked(element){
     var actionType = element.getAttribute("comp-type")
     editAPI(actionType)
