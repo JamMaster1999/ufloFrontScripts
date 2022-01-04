@@ -12,23 +12,30 @@
 //role and state updating
 //content editable for newly created components
 //emptyState go away when a new comp is added.
+//better file management DONE
+//delete,copy,paste,duplicate, for FRAME + Frame Comps
+//sort frame changes frame index
 
 //TO DO
 
-//better file management
+//unique right click for components
+//address video lack of right click
+//issue with adding components to empty frames
+//address textComponent sort capability
+//tag component add dropdown + content editable for them + visibility
 
-//delete,copy,paste,duplicate,sort frame
+//serve files over CDN
+
 //save: mutation observer(MO) + socket
+
 //MO: content editable for is not fully empty in textBoxes; waiting on mutation observer
 //MO: If all frame components are deleted from frame, emptyState returns 
 
-//tag component add dropdown + content editable for them + visibility
-//unique right click for components + copy/paste/duplicate/delete
-
+//title change changes nav frame titles
+//lobj/lesson/chapter in url as query parameters
 //lesson, chapter name + order + id & courseID when updating frame
 //pressing space goes to the next frame
 //frame action bar
-//lobj in query parameter
 //theme and textSize and mode
 
 

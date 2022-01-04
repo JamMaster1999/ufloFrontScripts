@@ -51,3 +51,12 @@ document.getElementById("saveFrame").addEventListener("click", function(){
         saveFrame(frameInv(frame))
     }
 })
+//modal event listener
+document.querySelectorAll("[comp-type='cancel-modal']")[0].addEventListener("click", function (event) {
+    removeModal()
+})
+document.getElementById("popupForm").addEventListener("click", function(e) {
+    if(e.target === e.currentTarget){
+        removeModal()
+    }
+})

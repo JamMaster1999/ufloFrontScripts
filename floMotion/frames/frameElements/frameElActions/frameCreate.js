@@ -1,4 +1,6 @@
 
+import {createFrameNav} from './floMotion/navigator/createFrameNav.js';
+
 function createFrame(lobjID, lobjEl){
     var frameData = []
     var frameObj = {}

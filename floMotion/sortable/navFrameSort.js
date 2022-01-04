@@ -7,8 +7,14 @@ function frameNavSortable(navList){
                 group:"frameNav",
                 animation: 250,
                 ghostClass: 'blue-background-class',
+
+                onStart: function(evt){
+                    frameSort(evt);
+                }
             });
             Sortables.push(navSortable)
         }
     }
 }
+
+

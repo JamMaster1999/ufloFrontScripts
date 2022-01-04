@@ -1,4 +1,6 @@
+var testFrameList
 function createFrameNav(frameList,lobjEl){
+    testFrameList = frameList;
     frameList.forEach(function (frame){
         frameNavEl.children[0].textContent = frame.title
         frameNavEl.setAttribute("comp-type","frame-nav")
