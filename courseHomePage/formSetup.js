@@ -43,6 +43,7 @@ Webflow.push(function() {
             responsePanel("success")
             courseLoad(courseID)
             removeModal()
+            formBody = {}
             $form.trigger("reset");
             if (formRedirect) { 
                 window.location = formRedirect; return; 
