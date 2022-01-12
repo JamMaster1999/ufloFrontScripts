@@ -16,12 +16,12 @@ document.getElementById("popupForm").addEventListener("click", function(e) {
 })
 
 
-//on cancel, empty out the variables for form. 
+//on cancel, empty out the variables for form. 12asdf
 document.getElementById("chapterBtn").addEventListener("click", function(event){
-    //event.preventDefault()
+    //event.preventDefault() is it working
     document.getElementById("createChapter").classList.remove("is--hidden")
     document.getElementById("popupTrigger").click()
-    addAPI("chapter")
+    addChapter()
 })
 
 document.getElementById("lessonBtn").addEventListener("click", function(event){
@@ -35,21 +35,28 @@ document.getElementById("lobjBtn").addEventListener("click", function(event){
     //event.preventDefault()
     document.getElementById("createLOBJ").classList.remove("is--hidden")
     document.getElementById("popupTrigger").click()
-    addAPI("lobj")
+    addLOBJ();
 })
 
-function removeModal(){
-    var forms = document.getElementById("popupForm").querySelectorAll(".section_popup-form")
-    for (var i = 0; i < forms.length; i++) {
-        if (forms[i].classList.contains("is--hidden")){
-            console.log("hidden modal")
-            continue;
-        } else {
-            forms[i].classList.add("is--hidden")
-            console.log("active modal")
-        }
-    }
-    document.getElementById("popupTrigger").click()
-    console.log(".done > popupTrigger")
-}
+chapterWrapper.addEventListener("click", function (event){
+    console.log("clicked")
+    eventPath = event.path
+    chapterID = selectedChapter(eventPath)
+    
+})
 
+lessonsWrapper.addEventListener("click", function (event){
+    console.log("clicked")
+    eventPath = event.path
+    lessonID = selectedLesson(eventPath)
+})
+
+lessonWrapper.addEventListener("click", function (event){
+    console.log("clicked")
+    eventPath = event.path
+    selectedLOBJ(eventPath)
+})
+
+document.querySelector(".section_dashboard").addEventListener("contextmenu", function(event){
+    contextMenuTarget(event)
+})

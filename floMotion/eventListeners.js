@@ -6,9 +6,9 @@ frameCompSearch.querySelector("input").addEventListener('input', function(e) {
     //console.log("e.target.value.toUpperCase()", e.target.value.toUpperCase())
 })
 
-document.getElementsByClassName("frame_comp-list")[0].addEventListener("click", createFrameComp)
+document.getElementsByClassName("frame_comp-list")[0].addEventListener("click", function(event){createFrameComp(event,selectedFrame)})
 //for detecting when expandable, lock or addframecomp has been clicked on
-document.querySelector("#framesWrapper").addEventListener("click", function(event){
+frameWrapper.addEventListener("click", function(event){
     eventPath = event.path
     for (var i=0; i<eventPath.length-3; i++){
         if (eventPath[i].classList.contains("frame_expand-btn")){
@@ -18,13 +18,14 @@ document.querySelector("#framesWrapper").addEventListener("click", function(even
             lock(eventPath[i].parentElement.outerHTML)
             break;
         } else if (eventPath[i].classList.contains("addframecomp")){
+            console.log("frame Comp clicked")
             addFrameCompMenu(eventPath[i].parentElement)
             break;
         }
     }
 })
 
-//on keydown event listener for flomotion page
+//on keydown event listener for flomotion page 1212
 document.onkeydown = function(evt) {
     evt = evt || window.event;
     if (evt.keyCode == 27) {
@@ -39,10 +40,10 @@ document.onkeydown = function(evt) {
 
 lobjListEl.addEventListener("contextmenu", contextMenuTarget)
 
-
 lobjListEl.addEventListener("click", function(e){
     frameNavClick(e.path)
 })
+
 //save events listener
 document.getElementById("saveFrame").addEventListener("click", function(){
     allFrameData = []

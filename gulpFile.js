@@ -1,22 +1,41 @@
 const gulp = require('gulp');
 const {src, dest} = require("gulp")
 const concat = require('gulp-concat');
-const del = require('del')
+var clipboard = require("gulp-clipboard");
+var del = require('del');
 
-const floMotionJS = () => {
+
+gulp.task('floMotionJS', function () {
     return src("./floMotion/**/*.js")
-    .pipe(concat('all.js'))
-    .pipe(dest('./floMotion/dist'))
-}
+    .pipe(concat('floMotion.js'))
+    .pipe(dest('./dist'))
+    .pipe(clipboard())
+})
 
-const courseDashJS = () => {
+gulp.task('courseDashJS', function () {
     return src("./courseHomePage/**/*.js")
-    .pipe(concat('all.js'))
-    .pipe(dest('./courseHomePage/dist'))
-}
+    .pipe(concat('courseDash.js'))
+    .pipe(dest('./dist'))
+    .pipe(clipboard())
+})
+
+gulp.task('cleanCourseDash', function(){
+    return del(['./dist/courseDash.js']);
+});
+
+gulp.task('cleanFloMotion', function(){
+    return del(['./dist/floMotion.js']);
+});
 
 
 
+gulp.task('run', gulp.series('courseDashJS','floMotionJS'));
 
-exports.floMotionJS = floMotionJS;
-exports.courseDashJS = courseDashJS;
+gulp.task('watch', function(){
+    gulp.watch('./courseHomePage/**/*.js', gulp.series('cleanCourseDash','courseDashJS'));
+    gulp.watch('./floMotion/**/*.js', gulp.series('cleanFloMotion','floMotionJS'));
+})
+
+gulp.task('default', gulp.series('run', 'watch'))
+
+

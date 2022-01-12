@@ -1,0 +1,126 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2580
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red202\green202\blue202;\red0\green0\blue0;
+\red202\green202\blue202;}
+{\*\expandedcolortbl;;\cssrgb\c0\c1\c1;\cssrgb\c83229\c83229\c83125;\cssrgb\c0\c1\c1;
+\cssrgb\c83229\c83229\c83125;}
+\margl1440\margr1440\vieww16300\viewh19080\viewkind0
+\deftab720
+\pard\pardeftab720\sl360\partightenfactor0
+
+\f0\fs40 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec3 //add comp button in every frame\
+//when clicked search bar opens with animation\
+//search in all comps including nested items\
+//when clicked element gets added to the frame.\
+//nested items turn into popups\
+//setup the functions that create the placeholder data for the frame component to be added \
+//content editable for expandable DONE\
+//new element gets saved into the database once every while \
+//sortable\
+//frame nav bar + connect to API\
+//re-render the setup function: sortable; ContentEditable; expandable; frames; no right click, no add component\
+//role and state updating\
+//content editable for newly created components\
+//emptyState go away when a new comp is added.\
+//better file management DONE\
+//delete,copy,paste,duplicate, for FRAME + Frame Comps\
+//sort frame changes frame index\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf4 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 //title change changes nav frame titles\
+//content editable for is not fully empty in textBoxes; \
+//mutation observer has been setup\
+//If all frame comps are deleted from frame, emptyState returns\
+//lesson, chapter name + order + id & courseID when updating frame\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf4 //navbar DONE\cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec3 \
+\cf4 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 //dynamic loading of lobj\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf4 //lobj/lesson/chapter in url as query parameters\cf4 \
+\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec3 \
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 //Asem\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf4 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 //pressing space goes to the next frame\
+//using event delegation\
+//making transformation objects smaller\cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec3 \
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 \
+//TO DO\
+\
+\
+\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf4 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 //mutation observer should be a function to add and remove all observers almost DONE\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf4 \
+\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf4 //theme and textSize and mode\cf4 \
+//bugs in monday \
+\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec3 \
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 //unique right click for components\
+//tag component add dropdown + content editable for them + visibility\
+\
+\
+\
+\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf4 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 //frame action bar\cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec3 \
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 //shortcuts\
+//make sure no element is in focus\
+//s for transition between frames and states\
+//a for add something in action bar\
+//z for frameNav\
+//e for change of state between edit and read-only\
+//@ for performing an action on a frame\
+//# for searching for a specific tag\
+//cmmd + S for save\
+\
+\
+\
+//later\
+//table component\
+//audio component\
+//file component\
+//info content for each component\cf4 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \
+\pard\pardeftab720\sl360\partightenfactor0
+\cf4 //serve files over CDN\
+\
+\
+//Mutation Observer\
+\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf4 //MO: for order + delete + add + edit for frames + socket\
+//saving transitory state before frameData is saved in DB while user enters channel. \
+Solution: \
+1. some form of persistence/rewind; \
+2. constantly saving in DB; \
+3. new channel for just the final transitory state\
+//Another issue is preventing MO from observing the frameRendering. Only observe changes made by this user, not other users. \
+\
+Solution: \
+1. Differentiate Add/Delete/Sort from Content Change\
+2. Add/Delete/Sort socket does not use mutation observer, rather the actual function that runs the command\
+3. For content changes, check to see if \
+3.a) document.hasFocus(). If false, the observed mutations are not performed by this user.\
+3.b) document.hasFocus() is true. Then only publish content changes where the mutation observed is on the same component as document.activeElement. These are the changes the user is making. \
+4. Two people cannot perform content changes to the same component\
+}

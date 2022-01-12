@@ -4,7 +4,7 @@ var navigatorHTML = '<div class="navigator is--solid-border solid--bg-color" sty
 document.body.appendChild(navigatorHTML)
 //var $lobjNavEl = $(".nav-lobj-w")[0].cloneNode(true)
 //var $lobjListEl = $(".nav-lobjs-w")[0]
-//var $frameNavEl = $(".nav-frame-w")[0].cloneNode(true)
+//var $frameNavEl = $(".nav-frame-w")[0].cloneNode(true)asdfasdf
 
 var lobjNavEl = document.querySelector(".nav-lobj-w").cloneNode(true)
 var lobjListEl = document.querySelector(".nav-lobjs-w")
