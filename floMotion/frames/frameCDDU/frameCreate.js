@@ -28,7 +28,6 @@ function createFrame(lobjID, lobjEl){
     console.error('Error:', error);
     responsePanel("error")
     });
-
 }
 
 function createFrameDone(response, lobjEl){

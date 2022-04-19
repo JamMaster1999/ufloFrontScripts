@@ -49,7 +49,7 @@ function quillInitSpecific(){
 
 function quillInit(permission){
     var toolFull = [['bold', 'italic','underline','strike'],['blockquote','code-block','formula','link'],[{'script':'super'},{'script':'sub'}],[{'list':'ordered'},{'list':'bullet'}, {'indent':'-1'},{'indent':'+1'}],['color','background']];
-    var toolBasic = [['bold', 'italic','underline'],['code-block','formula','link', 'color'],[{'script':'super'},{'script':'sub'}]];
+    var toolBasic = [['bold', 'italic','underline'],['blockquote','code-block','formula','link', 'color'],[{'script':'super'},{'script':'sub'}]];
     hljs.configure({   // optionally configure hljs
         languages: ['javascript', 'ruby', 'python']
     });
@@ -63,6 +63,13 @@ function quillInit(permission){
         readOnly: permission
         });
         quill.setContents(editors[k].text)
+        //quill.on('editor-change', function(eventName, ...args) {
+//          if (eventName === 'text-change') {
+//              // args[0] will be delta
+//          } else if (eventName === 'selection-change') {
+//              // args[0] will be old range
+//          }
+//      });
     }
     //data fields: data.text, data.mode, data.permission, data.theme
 }

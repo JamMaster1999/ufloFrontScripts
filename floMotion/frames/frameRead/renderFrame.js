@@ -23,3 +23,4 @@ function renderFrame(frames,state){
         editableStyle(frameEl.children[1],state)
     })
 }
+

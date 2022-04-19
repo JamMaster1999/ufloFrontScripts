@@ -12,15 +12,7 @@ var formBody = {}
 var formHeader
 
 
-//submitRequest()
-function setupBody(data){
-    for (i = 0; i < data.length; i++) {
-        var name = data[i].name
-        var value = data[i].value
-        console.log(name, value)
-        formBody[name] = value
-    }
-}
+
 
 function setupBody(data){
     for (i = 0; i < data.length; i++) {

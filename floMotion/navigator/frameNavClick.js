@@ -20,5 +20,3 @@ function frameLOBJID(frame){
     var lobjID = frame.parentNode.getAttribute("lobjID")
     return lobjID
 }
-//
-//https://flomotion-final.webflow.io/student-lobj-copy-2?chapter=4&lesson=2&lobj=1

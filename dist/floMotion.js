@@ -120,89 +120,6 @@ document.getElementById("popupForm").addEventListener("click", function(e) {
         removeModal()
     }
 })
-
-var testFrameList
-function createFrameNav(frameList,lobjEl){
-    testFrameList = frameList;
-    frameList.forEach(function (frame){
-        frameNavEl.children[0].textContent = frame.title
-        frameNavEl.setAttribute("comp-type","frame-nav")
-        frameNavEl.setAttribute("compID",frame.id)
-        frameNavEl.id = "frameNav" + frame.id
-        lobjEl.children[2].appendChild(frameNavEl.cloneNode(true))
-    })
-}
-
-
-
-function createLOBJs(lobjList){
-    lobjList.forEach(function (lobj){
-        lobjNavEl.children[0].textContent = lobj.title
-        lobjNavEl.id = "lobjID" + lobj.id
-        if (lobj.id == lobjParam){lobjNavEl.classList.add("is--theme-border")}
-        lobjNavEl.setAttribute("lobjID", lobj.id)
-        console.log("lobj created")
-        lobjNavEl.querySelector('.grid-auto-row').innerHTML = ""
-        createFrameNav(lobj.allFrames, lobjNavEl)
-        lobjListEl.appendChild(lobjNavEl.cloneNode(true))
-    })
-    lobjListEl.children[0].remove()
-}
-function frameNavClick(path){
-    for (element of path){
-        if (element.hasAttribute("compID")){
-            if (element.getAttribute("comp-type") === "frame-nav"){
-                var url = new URL("https://flomotion-final.webflow.io/student-lobj-copy-2?chapter=" + chapterParam + "&lesson=" + lessonParam + "&lobj=" + lobjParam  + "#frameID" + element.getAttribute("compID"))
-                //window.open(url, '_blank');
-                window.location.href = url
-                document.getElementById("frameNavTrigger").click()
-                break;
-            }
-        }
-        if (element.classList.contains("button")){
-            createFrame(frameLOBJID(element), element.parentElement)
-            break;
-        }
-    }
-}
-
-function frameLOBJID(frame){
-    var lobjID = frame.parentNode.getAttribute("lobjID")
-    return lobjID
-}
-//
-//https://flomotion-final.webflow.io/student-lobj-copy-2?chapter=4&lesson=2&lobj=1
-function frameInit(){
-    responsePanel('success')
-    console.log(status)
-    lobj = response.lobj
-    document.querySelector("#lobjID").setAttribute("lobjID",lobj.id)
-    document.querySelector("#lobjID").textContent = "LOBJ:" + lobj.order
-    document.querySelector("#lessonID").setAttribute("lessonID",lobj.lesson_id)
-    document.querySelector("#lessonID").textContent = "Lesson:" + lobj.lesson_id
-    document.querySelector("#chapterID").textContent = "Chapter:" + chapterParam
-    document.querySelector("#chapterID").setAttribute("chapterID",chapterParam)
-    //testTag = $frames[0].tag_id
-    //frames get rendered
-    renderFrame(lobj.frames,"true")
-    //lobjs in navigator are created
-    createLOBJs(response.lobjs)
-    //quill is initialized
-    quillInit(false)
-    //videos become response
-    reframe(document.querySelectorAll('.respVideo'))
-    //expandable is initialized
-    expandableInit()
-    //latex is initialized
-    latexInit()
-    //responsive text size for 
-    ResponsiveText()
-    sortableInit(true)
-    initObservation(true)
-    if (window.location.href.substring(8).split("/")[1].split("?")[0] == 'presentation') {setState(false)}
-    mode(false)
-    theme("peace")
-}
 function frameCompContextBasic(){
     menuItems.push({name:"add", shortcut:"A", icon:"https://uploads-ssl.webflow.com/61365f53652529080f68048b/61671779d468842516fde279_icons8-edit.svg"})
     menuItems.push({name:"copy", shortcut:"C", icon:"https://assets.website-files.com/61365f53652529080f68048b/6178128dc47739483610cc7f_icons8-copy-to-clipboard-3.svg"})
@@ -260,105 +177,6 @@ function presentationModeRightClock(){
 }
 
 
-//frame expandable
-function frameExpandSortable(expandWrapper){
-    if (expandWrapper != null){
-        var expandContainer = expandWrapper.querySelector(".grid-auto-row")
-        if (expandContainer != 'null'){
-            var expandSortable = new Sortable(expandContainer, {
-                group:"frameComp",
-                animation: 250,
-                ghostClass: 'blue-background-class',
-            });
-            Sortables.push(expandSortable)
-        }
-    }
-}
-
-//frame components that are not expandable
-function frameCompSortable(compContainer){
-    if (compContainer != null){
-        var frameSortable = new Sortable(compContainer, {
-            group:"frameComp",
-            animation: 250,
-            ghostClass: 'blue-background-class',
-        });
-        Sortables.push(frameSortable)
-    }
-}
-var debugSortEvent
-function frameSort(event){
-    
-    debugSortEvent = event
-    if (event.from != event.to){
-        return;
-    } else {
-        console.log("new index is" + event.newIndex)
-        var frameNavEl = event.item
-        var frameID = frameNavEl.getAttribute("compID")
-        var frameEl = document.querySelector("#frameID" + frameID)
-        if (frameWrapper.children.length-1 == event.newIndex){
-            console.log("sorting frames2")
-            frameWrapper.insertBefore(frameEl, frameWrapper.children[event.newIndex].nextSibling);
-        } else {
-            frameEl.remove()
-            console.log("sorting frames3")
-            frameWrapper.insertBefore(frameEl, frameWrapper.children[event.newIndex] )
-        }
-        frameIndexRename()
-    }
-}
-
-function frameIndexRename(){
-    for (frame of frameWrapper.children){
-        var currentTitle = frame.querySelector("h5").textContent.split(".")
-        currentTitle[0] = getChildElementIndex(frame) + 1
-        frame.querySelector("h5").textContent = currentTitle.join(".")
-        console.log("newTitle" + currentTitle.join("."))
-        //currentTitle.subString(currentTitle)
-    }
-}
-//sortable for frame nav components
-var navSortable
-function frameNavSortable(navList){
-    for (let i=0; i < navList.length; i++){
-        var frameNavContainer = navList[i].querySelector(".grid-auto-row")
-        if (frameNavContainer != null && navList[i].id == "lobjID" + lobjParam){
-            navSortable = new Sortable(frameNavContainer, {
-                group:"frameNav",
-                animation: 250,
-                ghostClass: 'blue-background-class',
-
-                onEnd: function(evt){
-                    frameSort(evt);
-                }
-            });
-            Sortables.push(navSortable)
-        }
-    }
-}
-
-
-
-//sortable init
-var Sortables = []
-//sortable for frame components
-function sortableInit(){
-    var frameList = document.querySelectorAll(".frame-w")
-    var navList = document.querySelectorAll(".nav-lobj-w")
-    for (frame of frameList){
-        frameExpandSortable(frame.querySelector(".is--expandable"))
-        frameCompSortable(frame.querySelector(".grid-auto-row"))
-    }
-    frameNavSortable(navList)
-}
-
-
-function sortableStatus(state){
-    Sortables.forEach(function (sortable) {
-        sortable.options.disabled = state
-    })
-}
 var testDebug2
 //make sure no element can become fully empty or else they can't click on it
 function contentEditable(frameComp, state){
@@ -534,6 +352,136 @@ function setState(edit){
     }
 }
 
+function frameInit(){
+    responsePanel('success')
+    console.log(status)
+    lobj = response.lobj
+    document.querySelector("#lobjID").setAttribute("lobjID",lobj.id)
+    document.querySelector("#lobjID").textContent = "LOBJ:" + lobj.order
+    document.querySelector("#lessonID").setAttribute("lessonID",lobj.lesson_id)
+    document.querySelector("#lessonID").textContent = "Lesson:" + lobj.lesson_id
+    document.querySelector("#chapterID").textContent = "Chapter:" + chapterParam
+    document.querySelector("#chapterID").setAttribute("chapterID",chapterParam)
+    //testTag = $frames[0].tag_id
+    //frames get rendered
+    renderFrame(lobj.frames,"true")
+    //lobjs in navigator are created
+    createLOBJs(response.lobjs)
+    //quill is initialized
+    quillInit(false)
+    //videos become response
+    reframe(document.querySelectorAll('.respVideo'))
+    //expandable is initialized
+    expandableInit()
+    //latex is initialized
+    latexInit()
+    //responsive text size for 
+    ResponsiveText()
+    sortableInit(true)
+    initObservation(true)
+    if (window.location.href.substring(8).split("/")[1].split("?")[0] == 'presentation') {setState(false)}
+    mode(false)
+    theme("peace")
+}
+//frame expandable
+function frameExpandSortable(expandWrapper){
+    if (expandWrapper != null){
+        var expandContainer = expandWrapper.querySelector(".grid-auto-row")
+        if (expandContainer != 'null'){
+            var expandSortable = new Sortable(expandContainer, {
+                group:"frameComp",
+                animation: 250,
+                ghostClass: 'blue-background-class',
+            });
+            Sortables.push(expandSortable)
+        }
+    }
+}
+
+//frame components that are not expandable
+function frameCompSortable(compContainer){
+    if (compContainer != null){
+        var frameSortable = new Sortable(compContainer, {
+            group:"frameComp",
+            animation: 250,
+            ghostClass: 'blue-background-class',
+        });
+        Sortables.push(frameSortable)
+    }
+}
+var debugSortEvent
+function frameSort(event){
+    
+    debugSortEvent = event
+    if (event.from != event.to){
+        return;
+    } else {
+        console.log("new index is" + event.newIndex)
+        var frameNavEl = event.item
+        var frameID = frameNavEl.getAttribute("compID")
+        var frameEl = document.querySelector("#frameID" + frameID)
+        if (frameWrapper.children.length-1 == event.newIndex){
+            console.log("sorting frames2")
+            frameWrapper.insertBefore(frameEl, frameWrapper.children[event.newIndex].nextSibling);
+        } else {
+            frameEl.remove()
+            console.log("sorting frames3")
+            frameWrapper.insertBefore(frameEl, frameWrapper.children[event.newIndex] )
+        }
+        frameIndexRename()
+    }
+}
+
+function frameIndexRename(){
+    for (frame of frameWrapper.children){
+        var currentTitle = frame.querySelector("h5").textContent.split(".")
+        currentTitle[0] = getChildElementIndex(frame) + 1
+        frame.querySelector("h5").textContent = currentTitle.join(".")
+        console.log("newTitle" + currentTitle.join("."))
+        //currentTitle.subString(currentTitle)
+    }
+}
+//sortable for frame nav components
+var navSortable
+function frameNavSortable(navList){
+    for (let i=0; i < navList.length; i++){
+        var frameNavContainer = navList[i].querySelector(".grid-auto-row")
+        if (frameNavContainer != null && navList[i].id == "lobjID" + lobjParam){
+            navSortable = new Sortable(frameNavContainer, {
+                group:"frameNav",
+                animation: 250,
+                ghostClass: 'blue-background-class',
+
+                onEnd: function(evt){
+                    frameSort(evt);
+                }
+            });
+            Sortables.push(navSortable)
+        }
+    }
+}
+
+
+
+//sortable init
+var Sortables = []
+//sortable for frame components
+function sortableInit(){
+    var frameList = document.querySelectorAll(".frame-w")
+    var navList = document.querySelectorAll(".nav-lobj-w")
+    for (frame of frameList){
+        frameExpandSortable(frame.querySelector(".is--expandable"))
+        frameCompSortable(frame.querySelector(".grid-auto-row"))
+    }
+    frameNavSortable(navList)
+}
+
+
+function sortableStatus(state){
+    Sortables.forEach(function (sortable) {
+        sortable.options.disabled = state
+    })
+}
 
 function emptyState(frameEl){
     var emptyState = document.createElement("div")
@@ -619,9 +567,365 @@ function theme(type){
 
 
 
+var testFrameList
+function createFrameNav(frameList,lobjEl){
+    testFrameList = frameList;
+    frameList.forEach(function (frame){
+        frameNavEl.children[0].textContent = frame.title
+        frameNavEl.setAttribute("comp-type","frame-nav")
+        frameNavEl.setAttribute("compID",frame.id)
+        frameNavEl.id = "frameNav" + frame.id
+        lobjEl.children[2].appendChild(frameNavEl.cloneNode(true))
+    })
+}
 
 
 
+function createLOBJs(lobjList){
+    lobjList.forEach(function (lobj){
+        lobjNavEl.children[0].textContent = lobj.title
+        lobjNavEl.id = "lobjID" + lobj.id
+        if (lobj.id == lobjParam){lobjNavEl.classList.add("is--theme-border")}
+        lobjNavEl.setAttribute("lobjID", lobj.id)
+        console.log("lobj created")
+        lobjNavEl.querySelector('.grid-auto-row').innerHTML = ""
+        createFrameNav(lobj.allFrames, lobjNavEl)
+        lobjListEl.appendChild(lobjNavEl.cloneNode(true))
+    })
+    lobjListEl.children[0].remove()
+}
+function frameNavClick(path){
+    for (element of path){
+        if (element.hasAttribute("compID")){
+            if (element.getAttribute("comp-type") === "frame-nav"){
+                var url = new URL("https://flomotion-final.webflow.io/student-lobj-copy-2?chapter=" + chapterParam + "&lesson=" + lessonParam + "&lobj=" + lobjParam  + "#frameID" + element.getAttribute("compID"))
+                //window.open(url, '_blank');
+                window.location.href = url
+                document.getElementById("frameNavTrigger").click()
+                break;
+            }
+        }
+        if (element.classList.contains("button")){
+            createFrame(frameLOBJID(element), element.parentElement)
+            break;
+        }
+    }
+}
+
+function frameLOBJID(frame){
+    var lobjID = frame.parentNode.getAttribute("lobjID")
+    return lobjID
+}
+//
+//https://flomotion-final.webflow.io/student-lobj-copy-2?chapter=4&lesson=2&lobj=1
+var coordinate = {"x": "0","y": "0"}
+var eventPath
+//recognizes whether the element has context menu enabled or not;
+function contextMenuTarget(event){
+    eventPath = event.path
+    for (var i=0; i<eventPath.length-1; i++){
+        //this conditional is used because of latex element, which uses shadow root
+        //this condition skips shadow root elements
+        if (eventPath[i].activeElement === undefined & eventPath[i].body === undefined){
+            if (eventPath[i].getAttribute("comp-type") != null){
+                contextCoordinate(event)
+                contextMenuTrigger(eventPath[i])
+                console.log(eventPath[i] + "," + i)
+                break;
+            }
+        }
+    }
+}
+
+function contextCoordinate(event){
+    event.preventDefault()
+    coordinate.x = event.clientX + "px"
+    coordinate.y = event.clientY + "px"
+}
+//right click triggered
+function contextMenuTrigger(el){
+    menuItems = [{}]
+    removeContextMenu()
+    if (el.getAttribute("comp-type") != null) {
+        console.log(el.getAttribute("comp-type"))
+        if (window.location.href.substring(8).split("/")[1].split("?")[0] == 'presentation'){
+            presentationModeRightClock()
+        }
+        else if (el.getAttribute("comp-type") != "tag" & el.getAttribute("comp-type") != "framenav"){
+            frameCompContextBasic()
+            var funcName = el.getAttribute("comp-type") + "ContextMenu"
+            if (typeof window[funcName] === "function"){
+                window[funcName]()
+            }
+        }
+        createContext(el)
+        letBodyScroll(true)
+    }
+}
+function createContext(target){
+    var menuWrapper = document.createElement("div")
+    menuWrapper.classList.add("right-click_menu", "solid--bg-color", "is--solid-border")
+    menuItems.forEach(function(item){
+        var contextItem = document.createElement("a")
+        contextItem.classList.add("right-click_item")
+        contextItem.classList.add("is--theme-hover")
+        var contextHTML = '<h5 class="is--weight400 is--text-color">Menu Item</h5><h5 class="is--shortcut is--text-color is--weight400">shrtct</h5><img src="" loading="lazy" alt="" class="icon-img is--medium">'
+        contextItem.innerHTML = contextHTML
+        contextItem.children[0].textContent = item.name
+        contextItem.children[1].textContent = item.shortcut
+        contextItem.children[2].src = item.icon
+        menuWrapper.append(contextItem)
+    })
+    menuWrapper.children[0].remove()
+    console.log(menuWrapper)
+    document.body.appendChild(menuWrapper)
+    menuWrapper.style.left = coordinate.x;
+    menuWrapper.style.top = coordinate.y;
+    menuWrapper.addEventListener("click", function(event){
+        var action = event.path
+        for (var i=0; i<action.length; i++){
+            if (action[i].classList != undefined){
+                if(action[i].classList.contains("right-click_item")){
+                    var funcName = action[i].children[0].textContent + "ContextClicked"
+                    removeContextMenu()
+                    window[funcName](target)
+                }
+            }   
+        }
+    })
+}
+const body = document.body;
+function letBodyScroll(bool) {
+    if (bool) {
+            body.style.overflow = 'hidden';
+    } else {
+        body.style.overflow = 'auto';
+    }
+}
+
+function removeContextMenu(){
+    if (document.querySelector(".right-click_menu") != null){
+        document.querySelector(".right-click_menu").remove()
+        letBodyScroll(false)
+    }
+}
+
+
+
+function createFrame(lobjID, lobjEl){
+    var frameData = []
+    var frameObj = {}
+    var formAction = "https://x8ki-letl-twmt.n7.xano.io/api:9toeBRNq/frame"
+    var order = lobjEl.querySelector(".grid-auto-row").children.length + 1
+    frameObj.title = "New Frame " + order 
+    frameObj.order = order
+    frameObj.lobj_id = lobjID
+    frameObj.frame = true
+    requestPanel()
+    var addResponse;
+    fetch(formAction, 
+    {
+        headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify(frameObj)
+    })
+    .then(res => res.json())
+    .then(data => addResponse = data)
+    .then(() => createFrameDone(addResponse, lobjEl))
+    .catch((error) => {
+    console.error('Error:', error);
+    responsePanel("error")
+    });
+}
+
+function createFrameDone(response, lobjEl){
+    var frameData = []
+    frameData.push(response)
+    createFrameNav(frameData,lobjEl)
+    renderFrame(frameData, true)
+    frameCompSortable(document.getElementById("frameID" + response.id).querySelector(".grid-auto-row"))
+    responsePanel("success")
+}
+
+
+
+
+
+
+//type of form submission
+var formSubmissionType
+//right click menu items
+var menuItems = [{}]
+//where to send the form to
+var hostURL = "https://x8ki-letl-twmt.n7.xano.io/api:9toeBRNq/"
+var formAction = hostURL
+//POST or DELETE
+var formMethod
+//Data embedded in the form
+var formData = {}
+//body of the form
+var formBody = {}
+//header of the form
+var formHeader
+
+
+//submitRequest()
+function setupBody(data){
+    for (i = 0; i < data.length; i++) {
+        var name = data[i].name
+        var value = data[i].value
+        console.log(name, value)
+        formBody[name] = value
+    }
+}
+
+
+
+function deleteContextClicked(element){
+    document.getElementById("popupTrigger").click()
+    if (element.getAttribute("comp-type") != "frame-nav"){element.remove()}
+    else if (element.getAttribute("comp-type") === "frame-nav"){
+        console.log(element.getAttribute("compID"))
+        deleteFrame(element.getAttribute("compID"))
+        document.getElementById("deleteConfirm").classList.remove("is--hidden")
+    }
+}
+
+var frameDeleteID = 0
+function deleteFrame(id){
+    formMethod = "DELETE"
+    formAction = hostURL + "frame" + "/" + id
+    frameDeleteID = id
+}
+
+function deleteFrameConfirm(frameID){
+    if (document.getElementById("frameID" + frameID) != null){
+        document.getElementById("frameID" + frameID).remove()
+    }
+    document.getElementById("frameNav" + frameID).remove()
+}
+
+
+//form based requests
+var Webflow = Webflow || [];
+Webflow.push(function() {  
+    $(document).off('submit');
+    $('form').submit(function(e) {
+        e.preventDefault();
+        if (frameDeleteID != 0){
+            deleteFrameConfirm(frameDeleteID)
+            frameDeleteID = 0
+        }        
+        requestPanel()
+        const $form = $(this); // The submitted form
+        const $submit = $('[type=submit]', $form); // Submit button of form
+        const buttonText = $submit.val(); // Original button text
+        const buttonWaitingText = $submit.attr('data-wait'); // Waiting button text value
+        const formRedirect = $form.attr('data-redirect'); // Form redirect location
+        setupBody($($form).serializeArray())
+        formData = $($form).serializeArray()
+        var formResponse;
+        fetch(formAction, 
+        {
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+            method: formMethod,
+            body: formBody
+        })
+        .then(deleteFrameDone)
+        .then(data => formResponse = data)
+        .catch(console.log);
+        if (buttonWaitingText) {
+            $submit.val(buttonWaitingText); 
+        }
+    });
+})
+
+
+
+const deleteFrameDone = response => {
+    if (!response.ok) { 
+        responsePanel("error")
+        $submit.val(buttonText)
+        throw Error(response.statusText);
+    } else {
+        removeModal();
+        responsePanel("success")
+        formAction = hostURL
+        $submit.val(buttonText);
+       return response.json();
+       
+    }
+ }; 
+
+function duplicateContextClicked(element){  
+    if (element.getAttribute("comp-type") != "frame-nav"){
+        element.parentNode.appendChild(element.cloneNode(true))
+    } else if (element.getAttribute("comp-type") === "frame-nav"){
+        duplicateFrame(element.getAttribute("compid"), element.parentNode.parentNode.getAttribute("lobjID"))
+    }
+}
+var copyEl
+function copyContextClicked(element){
+    if (element.getAttribute("comp-type") != "frame-nav"){copyEl = element.cloneNode(true)}
+    else if (element.getAttribute("comp-type") === "frame-nav"){
+        copyEl = element.getAttribute("compid")
+    }
+}
+function pasteContextClicked(element){
+    if (element.getAttribute("comp-type") != "frame-nav"){element.parentNode.appendChild(copyEl)}
+    else if (element.getAttribute("comp-type") === "frame-nav"){duplicateFrame(copyEl, element.parentNode.parentNode.getAttribute("lobjID"))}
+}
+//sorting frames updates their location in the page
+var fetchHeaders =  {'Accept': 'application/json','Content-Type': 'application/json'}
+var formResponse
+function duplicateFrame(frameID, lobjDest){
+    formBody = {}
+    formMethod = "POST"
+    formAction = hostURL + "duplicate/frame"
+    formBody.frame_id = frameID
+    formBody.lobj_id = lobjDest
+    formBody = JSON.stringify(formBody)
+    requestPanel()
+    fetch(formAction, 
+        {
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+            method: formMethod,
+            body: formBody
+        })
+        .then(res => res.json())
+        .then(data => addResponse = data)
+        .then(() => duplicateFrameDone(addResponse, lobjDest))
+        .catch((error) => {
+        console.error('Error:', error);
+        responsePanel("error")
+        });
+}
+
+function duplicateFrameDone(response, lobjID){
+    var lobjIDAtt = '[lobjID="' + lobjID + '"' + ']'
+    var lobjEl = lobjListEl.querySelector(lobjIDAtt)
+    var frameData = []
+    frameData.push(response)
+    responsePanel("success")
+    formAction = hostURL
+    createFrameNav(frameData,lobjEl)
+    console.log("rendering navigator" + lobjID )
+    //becomes dynamic based on query parameters
+    if (lobjID === lobjParam){
+    console.log("rendering frame"); 
+    renderFrame(frameData, true)
+    frameCompSortable(document.getElementById("frameID" + response.id).querySelector(".grid-auto-row"))
+    }   
+}
 function addFrameCompMenu(frameEl){
     document.getElementsByClassName("frame_comp-list")[0].style.display = "flex"
     selectedFrame = frameEl
@@ -686,7 +990,7 @@ function quillInitSpecific(){
 
 function quillInit(permission){
     var toolFull = [['bold', 'italic','underline','strike'],['blockquote','code-block','formula','link'],[{'script':'super'},{'script':'sub'}],[{'list':'ordered'},{'list':'bullet'}, {'indent':'-1'},{'indent':'+1'}],['color','background']];
-    var toolBasic = [['bold', 'italic','underline'],['code-block','formula','link', 'color'],[{'script':'super'},{'script':'sub'}]];
+    var toolBasic = [['bold', 'italic','underline'],['blockquote','code-block','formula','link', 'color'],[{'script':'super'},{'script':'sub'}]];
     hljs.configure({   // optionally configure hljs
         languages: ['javascript', 'ruby', 'python']
     });
@@ -700,6 +1004,13 @@ function quillInit(permission){
         readOnly: permission
         });
         quill.setContents(editors[k].text)
+        //quill.on('editor-change', function(eventName, ...args) {
+//          if (eventName === 'text-change') {
+//              // args[0] will be delta
+//          } else if (eventName === 'selection-change') {
+//              // args[0] will be old range
+//          }
+//      });
     }
     //data fields: data.text, data.mode, data.permission, data.theme
 }
@@ -904,6 +1215,65 @@ function frameCompSearchFunc(searchTerm){
         } else { compItem.style.display = "none" }
     }
 }
+function renderComps(components, index){
+    components.forEach(function(component){
+        if (component.data != null){
+            if (typeof window[component.type] === "function"){
+                window[component.type](component.data, index, component.type)
+            }
+        }
+    })
+}
+
+
+
+function renderFrame(frames,state){
+    frames.forEach(function (frame, frameOrder){
+        var frameEl = document.createElement('frameItem')
+        frameEl.classList.add('frame-w', 'section--bg-color', 'is--text-color','is--border')
+        var frameHTML = '<div class="tag-w"></div><h5>1. Frame Heading</h5><div class="fullwidthline is--thin"></div><a href="#" class="frame_lock-btn is--border w-inline-block"><img src="https://assets.website-files.com/61365f53652529080f68048b/617815db14f5908336a66eb0_icons8-lock-3.svg" loading="lazy" alt="" class="icon-img"></a><div class="grid-auto-row"></div><div class="addframecomp"><a href="#" class="button is--text-color is--theme">Add Frame Comp</a></div>'
+        frameEl.innerHTML = frameHTML
+        frameEl.setAttribute("compID",frame.id)  
+        frameEl.setAttribute("comp-type","frame")
+        frameEl.id = "frameID" + frame.id
+        frameEl.children[1].textContent = frame.order + ". " + frame.title
+        //create Tags        
+        frameWrapper.appendChild(frameEl)
+        if (frame.tag_id[0] != null && frame.tag_id[0] != undefined){
+            renderTag(frame.tag_id,frameEl)
+        }
+        // //create Components
+        if (frame.content.length != 0){
+            renderComps(frame.content,getChildElementIndex(frameEl))
+        } else if (frame.content.length == 0){
+            emptyState(frameEl)
+        }
+        contentEditable(frameEl.querySelector(".grid-auto-row"),state)
+        editableStyle(frameEl.children[1],state)
+    })
+}
+
+
+function renderTag(tags,frame){
+    //var tagEl = frameEl.children[0].children[0].cloneNode(true)
+    var tagEl = document.createElement("div")
+    tagEl.classList.add("frame_tag", "is--right-margin", "is--solid-border")
+    tagEl.innerHTML = '<div> Tag </div>'
+    var tagWrapper = frame.querySelector(".tag-w")
+    tags.forEach(function(tag){
+        //better to use .filter(v => v % 2 === 0).forEach
+        if (tag.hidden){
+            return
+        }
+        console.log("tag ID: " + tag[0].id + " title: " + tag[0].name)
+        tagEl.children[0].textContent = tag[0].name
+        //console.log("tag ID: " + tag[0].id + " title: " + tag[0].name)
+        console.log("tag frontend " + tagEl.children[0].textContent)
+        tagEl.setAttribute("comp-type","tag")
+        tagEl.setAttribute("compID",tag[0].id)
+        tagWrapper.appendChild(tagEl.cloneNode(true))
+    })
+}
 function compInv(components){
     var content = []
     var order = 0
@@ -1025,443 +1395,4 @@ function tagInv(tagList){
         }
     }
     return tagIDs
-}
-
-
-
-function createFrame(lobjID, lobjEl){
-    var frameData = []
-    var frameObj = {}
-    var formAction = "https://x8ki-letl-twmt.n7.xano.io/api:9toeBRNq/frame"
-    var order = lobjEl.querySelector(".grid-auto-row").children.length + 1
-    frameObj.title = "New Frame " + order 
-    frameObj.order = order
-    frameObj.lobj_id = lobjID
-    frameObj.frame = true
-    requestPanel()
-    var addResponse;
-    fetch(formAction, 
-    {
-        headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-        },
-        method: "POST",
-        body: JSON.stringify(frameObj)
-    })
-    .then(res => res.json())
-    .then(data => addResponse = data)
-    .then(() => createFrameDone(addResponse, lobjEl))
-    .catch((error) => {
-    console.error('Error:', error);
-    responsePanel("error")
-    });
-
-}
-
-function createFrameDone(response, lobjEl){
-    var frameData = []
-    frameData.push(response)
-    createFrameNav(frameData,lobjEl)
-    renderFrame(frameData, true)
-    frameCompSortable(document.getElementById("frameID" + response.id).querySelector(".grid-auto-row"))
-    responsePanel("success")
-}
-
-
-
-
-
-
-function renderComps(components, index){
-    components.forEach(function(component){
-        if (component.data != null){
-            if (typeof window[component.type] === "function"){
-                window[component.type](component.data, index, component.type)
-            }
-        }
-    })
-}
-
-
-
-function renderFrame(frames,state){
-    frames.forEach(function (frame, frameOrder){
-        var frameEl = document.createElement('frameItem')
-        frameEl.classList.add('frame-w', 'section--bg-color', 'is--text-color','is--border')
-        var frameHTML = '<div class="tag-w"></div><h5>1. Frame Heading</h5><div class="fullwidthline is--thin"></div><a href="#" class="frame_lock-btn is--border w-inline-block"><img src="https://assets.website-files.com/61365f53652529080f68048b/617815db14f5908336a66eb0_icons8-lock-3.svg" loading="lazy" alt="" class="icon-img"></a><div class="grid-auto-row"></div><div class="addframecomp"><a href="#" class="button is--text-color is--theme">Add Frame Comp</a></div>'
-        frameEl.innerHTML = frameHTML
-        frameEl.setAttribute("compID",frame.id)  
-        frameEl.setAttribute("comp-type","frame")
-        frameEl.id = "frameID" + frame.id
-        frameEl.children[1].textContent = frame.order + ". " + frame.title
-        //create Tags        
-        frameWrapper.appendChild(frameEl)
-        if (frame.tag_id[0] != null && frame.tag_id[0] != undefined){
-            renderTag(frame.tag_id,frameEl)
-        }
-        // //create Components
-        if (frame.content.length != 0){
-            renderComps(frame.content,getChildElementIndex(frameEl))
-        } else if (frame.content.length == 0){
-            emptyState(frameEl)
-        }
-        contentEditable(frameEl.querySelector(".grid-auto-row"),state)
-        editableStyle(frameEl.children[1],state)
-    })
-}
-function renderTag(tags,frame){
-    //var tagEl = frameEl.children[0].children[0].cloneNode(true)
-    var tagEl = document.createElement("div")
-    tagEl.classList.add("frame_tag", "is--right-margin", "is--solid-border")
-    tagEl.innerHTML = '<div> Tag </div>'
-    var tagWrapper = frame.querySelector(".tag-w")
-    tags.forEach(function(tag){
-        //better to use .filter(v => v % 2 === 0).forEach
-        if (tag.hidden){
-            return
-        }
-        console.log("tag ID: " + tag[0].id + " title: " + tag[0].name)
-        tagEl.children[0].textContent = tag[0].name
-        //console.log("tag ID: " + tag[0].id + " title: " + tag[0].name)
-        console.log("tag frontend " + tagEl.children[0].textContent)
-        tagEl.setAttribute("comp-type","tag")
-        tagEl.setAttribute("compID",tag[0].id)
-        tagWrapper.appendChild(tagEl.cloneNode(true))
-    })
-}
-//type of form submission
-var formSubmissionType
-//right click menu items
-var menuItems = [{}]
-//where to send the form to
-var hostURL = "https://x8ki-letl-twmt.n7.xano.io/api:9toeBRNq/"
-var formAction = hostURL
-//POST or DELETE
-var formMethod
-//Data embedded in the form
-var formData = {}
-//body of the form
-var formBody = {}
-//header of the form
-var formHeader
-
-
-//submitRequest()
-function setupBody(data){
-    for (i = 0; i < data.length; i++) {
-        var name = data[i].name
-        var value = data[i].value
-        console.log(name, value)
-        formBody[name] = value
-    }
-}
-
-
-
-function annotateContextClicked(element){
-    annotationTextTest = element
-    annotationTest = []
-    document.getElementById("frameAnnotateOpen").click()
-    if (element.getAttribute("comp-type") == "text"){
-        console.log("text annotated")
-        var range = Quill.find(element).getSelection();
-        testTextRange = range
-        if (range) {
-        if (range.length == 0) {
-            console.log('User cursor is at index', range.index);
-        } else {
-            var text = Quill.find(element).getText(range.index, range.length);
-            console.log('User has highlighted: ', text);
-        }
-        } else {
-        console.log('User cursor is not in editor');
-        }
-    }
-    else {
-        console.log(element.getAttribute("comp-type"))
-        annotationTest.push(element.getAttribute("comp-type"))
-        annotationTest.push(getChildElementIndex(element))
-        annotationTest.push(element.parentElement.parentElement.getAttribute("compID"))
-    }
-}
-var annotationTest = []
-var annotationTextTest
-var testTextRange
-
-function createAnnotation(){
-
-}
-
-
-function createFrame(lobjID, lobjEl){
-    var frameData = []
-    var frameObj = {}
-    var formAction = "https://x8ki-letl-twmt.n7.xano.io/api:9toeBRNq/frame"
-    var order = lobjEl.querySelector(".grid-auto-row").children.length + 1
-    frameObj.title = "New Frame " + order 
-    frameObj.order = order
-    frameObj.lobj_id = lobjID
-    frameObj.frame = true
-    requestPanel()
-    var addResponse;
-    fetch(formAction, 
-    {
-        headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-        },
-        method: "POST",
-        body: JSON.stringify(frameObj)
-    })
-    .then(res => res.json())
-    .then(data => addResponse = data)
-    .then(() => createFrameDone(addResponse, lobjEl))
-    .catch((error) => {
-    console.error('Error:', error);
-    responsePanel("error")
-    });
-
-}
-
-function createFrameDone(response, lobjEl){
-    var frameData = []
-    frameData.push(response)
-    createFrameNav(frameData,lobjEl)
-    renderFrame(frameData, true)
-    frameCompSortable(document.getElementById("frameID" + response.id).querySelector(".grid-auto-row"))
-    responsePanel("success")
-}
-function deleteContextClicked(element){
-    document.getElementById("popupTrigger").click()
-    if (element.getAttribute("comp-type") != "frame-nav"){element.remove()}
-    else if (element.getAttribute("comp-type") === "frame-nav"){
-        console.log(element.getAttribute("compID"))
-        deleteFrame(element.getAttribute("compID"))
-        document.getElementById("deleteConfirm").classList.remove("is--hidden")
-    }
-}
-
-var frameDeleteID = 0
-function deleteFrame(id){
-    formMethod = "DELETE"
-    formAction = hostURL + "frame" + "/" + id
-    frameDeleteID = id
-}
-
-function deleteFrameConfirm(frameID){
-    if (document.getElementById("frameID" + frameID) != null){
-        document.getElementById("frameID" + frameID).remove()
-    }
-    document.getElementById("frameNav" + frameID).remove()
-}
-
-
-//form based requests
-var Webflow = Webflow || [];
-Webflow.push(function() {  
-    $(document).off('submit');
-    $('form').submit(function(e) {
-        e.preventDefault();
-        if (frameDeleteID != 0){
-            deleteFrameConfirm(frameDeleteID)
-            frameDeleteID = 0
-        }        
-        requestPanel()
-        const $form = $(this); // The submitted form
-        const $submit = $('[type=submit]', $form); // Submit button of form
-        const buttonText = $submit.val(); // Original button text
-        const buttonWaitingText = $submit.attr('data-wait'); // Waiting button text value
-        const formRedirect = $form.attr('data-redirect'); // Form redirect location
-        setupBody($($form).serializeArray())
-        formData = $($form).serializeArray()
-        var formResponse;
-        fetch(formAction, 
-        {
-            headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-            },
-            method: formMethod,
-            body: formBody
-        })
-        .then(deleteFrameDone)
-        .then(data => formResponse = data)
-        .catch(console.log);
-        if (buttonWaitingText) {
-            $submit.val(buttonWaitingText); 
-        }
-    });
-})
-
-
-
-const deleteFrameDone = response => {
-    if (!response.ok) { 
-        responsePanel("error")
-        $submit.val(buttonText)
-        throw Error(response.statusText);
-    } else {
-        removeModal();
-        responsePanel("success")
-        formAction = hostURL
-        $submit.val(buttonText);
-       return response.json();
-       
-    }
- }; 
-
-function duplicateContextClicked(element){  
-    if (element.getAttribute("comp-type") != "frame-nav"){
-        element.parentNode.appendChild(element.cloneNode(true))
-    } else if (element.getAttribute("comp-type") === "frame-nav"){
-        duplicateFrame(element.getAttribute("compid"), element.parentNode.parentNode.getAttribute("lobjID"))
-    }
-}
-var copyEl
-function copyContextClicked(element){
-    if (element.getAttribute("comp-type") != "frame-nav"){copyEl = element.cloneNode(true)}
-    else if (element.getAttribute("comp-type") === "frame-nav"){
-        copyEl = element.getAttribute("compid")
-    }
-}
-function pasteContextClicked(element){
-    if (element.getAttribute("comp-type") != "frame-nav"){element.parentNode.appendChild(copyEl)}
-    else if (element.getAttribute("comp-type") === "frame-nav"){duplicateFrame(copyEl, element.parentNode.parentNode.getAttribute("lobjID"))}
-}
-//sorting frames updates their location in the page
-var fetchHeaders =  {'Accept': 'application/json','Content-Type': 'application/json'}
-var formResponse
-function duplicateFrame(frameID, lobjDest){
-    formBody = {}
-    formMethod = "POST"
-    formAction = hostURL + "duplicate/frame"
-    formBody.frame_id = frameID
-    formBody.lobj_id = lobjDest
-    formBody = JSON.stringify(formBody)
-    requestPanel()
-    fetch(formAction, 
-        {
-            headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-            },
-            method: formMethod,
-            body: formBody
-        })
-        .then(res => res.json())
-        .then(data => addResponse = data)
-        .then(() => duplicateFrameDone(addResponse, lobjDest))
-        .catch((error) => {
-        console.error('Error:', error);
-        responsePanel("error")
-        });
-}
-
-function duplicateFrameDone(response, lobjID){
-    var lobjIDAtt = '[lobjID="' + lobjID + '"' + ']'
-    var lobjEl = lobjListEl.querySelector(lobjIDAtt)
-    var frameData = []
-    frameData.push(response)
-    responsePanel("success")
-    formAction = hostURL
-    createFrameNav(frameData,lobjEl)
-    console.log("rendering navigator" + lobjID )
-    //becomes dynamic based on query parameters
-    if (lobjID === lobjParam){
-    console.log("rendering frame"); 
-    renderFrame(frameData, true)
-    frameCompSortable(document.getElementById("frameID" + response.id).querySelector(".grid-auto-row"))
-    }   
-}
-var coordinate = {"x": "0","y": "0"}
-var eventPath
-//recognizes whether the element has context menu enabled or not;
-function contextMenuTarget(event){
-    eventPath = event.path
-    for (var i=0; i<eventPath.length-1; i++){
-        //this conditional is used because of latex element, which uses shadow root
-        //this condition skips shadow root elements
-        if (eventPath[i].activeElement === undefined & eventPath[i].body === undefined){
-            if (eventPath[i].getAttribute("comp-type") != null){
-                contextCoordinate(event)
-                contextMenuTrigger(eventPath[i])
-                console.log(eventPath[i] + "," + i)
-                break;
-            }
-        }
-    }
-}
-
-function contextCoordinate(event){
-    event.preventDefault()
-    coordinate.x = event.clientX + "px"
-    coordinate.y = event.clientY + "px"
-}
-//right click triggered
-function contextMenuTrigger(el){
-    menuItems = [{}]
-    removeContextMenu()
-    if (el.getAttribute("comp-type") != null) {
-        console.log(el.getAttribute("comp-type"))
-        if (window.location.href.substring(8).split("/")[1].split("?")[0] == 'presentation'){
-            presentationModeRightClock()
-        }
-        else if (el.getAttribute("comp-type") != "tag" & el.getAttribute("comp-type") != "framenav"){
-            frameCompContextBasic()
-            var funcName = el.getAttribute("comp-type") + "ContextMenu"
-            if (typeof window[funcName] === "function"){
-                window[funcName]()
-            }
-        }
-        createContext(el)
-        letBodyScroll(true)
-    }
-}
-function createContext(target){
-    var menuWrapper = document.createElement("div")
-    menuWrapper.classList.add("right-click_menu", "solid--bg-color", "is--solid-border")
-    menuItems.forEach(function(item){
-        var contextItem = document.createElement("a")
-        contextItem.classList.add("right-click_item")
-        contextItem.classList.add("is--theme-hover")
-        var contextHTML = '<h5 class="is--weight400 is--text-color">Menu Item</h5><h5 class="is--shortcut is--text-color is--weight400">shrtct</h5><img src="" loading="lazy" alt="" class="icon-img is--medium">'
-        contextItem.innerHTML = contextHTML
-        contextItem.children[0].textContent = item.name
-        contextItem.children[1].textContent = item.shortcut
-        contextItem.children[2].src = item.icon
-        menuWrapper.append(contextItem)
-    })
-    menuWrapper.children[0].remove()
-    console.log(menuWrapper)
-    document.body.appendChild(menuWrapper)
-    menuWrapper.style.left = coordinate.x;
-    menuWrapper.style.top = coordinate.y;
-    menuWrapper.addEventListener("click", function(event){
-        var action = event.path
-        for (var i=0; i<action.length; i++){
-            if (action[i].classList != undefined){
-                if(action[i].classList.contains("right-click_item")){
-                    var funcName = action[i].children[0].textContent + "ContextClicked"
-                    removeContextMenu()
-                    window[funcName](target)
-                }
-            }   
-        }
-    })
-}
-const body = document.body;
-function letBodyScroll(bool) {
-    if (bool) {
-            body.style.overflow = 'hidden';
-    } else {
-        body.style.overflow = 'auto';
-    }
-}
-
-function removeContextMenu(){
-    if (document.querySelector(".right-click_menu") != null){
-        document.querySelector(".right-click_menu").remove()
-        letBodyScroll(false)
-    }
 }

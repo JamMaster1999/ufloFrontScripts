@@ -150,15 +150,7 @@ var formBody = {}
 var formHeader
 
 
-//submitRequest()
-function setupBody(data){
-    for (i = 0; i < data.length; i++) {
-        var name = data[i].name
-        var value = data[i].value
-        console.log(name, value)
-        formBody[name] = value
-    }
-}
+
 
 function setupBody(data){
     for (i = 0; i < data.length; i++) {
@@ -234,6 +226,38 @@ function removeModal(){
     formAction = hostURL
 }
 
+function courseList(courses) {
+    courses.forEach( function (course){
+        var option = document.createElement("option")
+        option.value = course[0].id
+        option.text = course[0].title
+        courseSelect.appendChild(option)
+    })
+}
+courseSelect.onchange = function() {
+    requestPanel()
+    courseID = parseInt(this.value)
+    courseLoad(courseID);
+}
+
+function courseLoad(courseID){
+    var requestURL = hostURL + 'course/' + courseID
+    $.when($.get(requestURL)).then(function(data,status){
+        responsePanel("success")
+        console.log(status)
+        $response = data
+        chapters = $response.chapter_of_course
+        createChapters(chapters)
+        if (selectedChapterID != undefined) {
+            selectedChapterAuto(selectedChapterID)
+            console.log("formSuccess > selectedChapterID", selectedChapterID)
+            if (selectedLessonID != undefined) {
+                selectedLessonAuto(selectedLessonID)
+                console.log("formSuccess > selectedLessonID", selectedLessonID)
+            }
+        }
+    })
+}
 function createChapters(chapterList){
     chapterWrapper.children[1].innerHTML = ''
     if (chapterList.length > 0){
@@ -275,101 +299,6 @@ function selectedChapterAuto(chapterID){
     createLessons(chapterID)
 }
 
-function courseList(courses) {
-    courses.forEach( function (course){
-        var option = document.createElement("option")
-        option.value = course[0].id
-        option.text = course[0].title
-        courseSelect.appendChild(option)
-    })
-}
-courseSelect.onchange = function() {
-    requestPanel()
-    courseID = parseInt(this.value)
-    courseLoad(courseID);
-}
-
-function courseLoad(courseID){
-    var requestURL = hostURL + 'course/' + courseID
-    $.when($.get(requestURL)).then(function(data,status){
-        responsePanel("success")
-        console.log(status)
-        $response = data
-        chapters = $response.chapter_of_course
-        createChapters(chapters)
-        if (selectedChapterID != undefined) {
-            selectedChapterAuto(selectedChapterID)
-            console.log("formSuccess > selectedChapterID", selectedChapterID)
-            if (selectedLessonID != undefined) {
-                selectedLessonAuto(selectedLessonID)
-                console.log("formSuccess > selectedLessonID", selectedLessonID)
-            }
-        }
-    })
-}
-function createFrames(frameList){
-    frameList.forEach(function(frame){
-    var lobjFrameEl = document.createElement("a")
-    lobjFrameEl.classList.add("frame-link", "text", "is--text-color")
-    lobjFrameEl.textContent = frame.order + ". " + frame.title 
-    lobjEl.querySelector(".frames-w").appendChild(lobjFrameEl)
-    })
-    
-}
-function createLOBJs(lobjList){
-    //empty all current elements
-    var selectedLesson = lessonWrapper.querySelector(".grid-auto-row")
-    if (selectedLesson.children.length > 0){
-        selectedLesson.innerHTML = ''
-    }
-    if (lobjList.length > 0){
-        lobjList.forEach(function (lobj){
-            var lobjEl = document.createElement("div")
-            lobjEl.classList.add("lobj-grid","is--border")
-            var lobjHTML = '<div class="lobj-numbers"><div class="icon_wrapper"><div class="icon_wrapper"><img src="https://assets.website-files.com/61365f53652529080f68048b/6149f9445288582cdd4a4739_icons8-ranking.svg" alt="" class="icon-img is--xsmall is--right-margin" style="filter: invert(100%);"><div class="text is--text-color" style="color: rgb(0, 0, 0);">---&nbsp; / --- pts</div></div></div><div class="icon_wrapper"><img src="https://assets.website-files.com/61365f53652529080f68048b/6149c5de0e3c32876ed77a41_icons8-content-2.svg" alt="" class="icon-img is--xsmall is--right-margin" style="filter: invert(100%);"><div class="text is--text-color" style="color: rgb(0, 0, 0);">10 Frames</div></div><div class="heightline"></div><div class="icon_wrapper"><img src="https://assets.website-files.com/61365f53652529080f68048b/6149c582e966ca33b609fa09_icons8-clock.svg" alt="" class="icon-img is--xsmall is--right-margin" style="filter: invert(100%);"><div class="text is--text-color" style="color: rgb(0, 0, 0);">25 Mins</div></div><div class="heightline"></div><div class="icon_wrapper"><img src="https://assets.website-files.com/61365f53652529080f68048b/6149c66b330febec5b46dcc2_icons8-ask-question.svg" alt="" class="icon-img is--xsmall is--right-margin" style="filter: invert(100%);"><h6 class="is--text-color is--weight400" style="color: rgb(0, 0, 0);">0 Q</h6></div></div><h4 style="color: rgb(0, 0, 0);" class="is--text-color">What is statistics</h4><div class="paragraph is--text-color" style="color: rgb(0, 0, 0);">Statistics is the study of different disciplines to understand hwo they realte to each each other thorugh numbers.fsdfsdf</div>'
-            lobjEl.innerHTML = lobjHTML
-            console.log("frame count" + lobj.frame_of_lobj.length)
-            lobjEl.querySelector(".lobj-numbers").children[1].children[1].textContent = lobj.frame_of_lobj.length + " Frames"
-            lobjEl.querySelector(".lobj-numbers").children[3].children[1].textContent = lobj.timeExp + " Mins"
-            lobjEl.children[1].textContent = lobj.title
-            lobjEl.children[2].textContent = lobj.desc
-            lobjEl.setAttribute("comp-type","lobj")
-            lobjEl.setAttribute("compID",lobj.id)
-            lobjEl.setAttribute("lessonID",selectedLessonID)
-            lobjEl.setAttribute("chapterID",selectedChapterID)
-            selectedLesson.appendChild(lobjEl)
-            if (lobj.frame_of_lobj.length > 0){
-                //createFrames(lobj.frame_of_lobj)
-            } else {
-                //emptyState(lobjEl)
-            }
-        })
-        var lobjSortable = lessonWrapper.querySelector(".grid-auto-row")
-        new Sortable(lobjSortable, {
-            group:"lobj",
-            animation: 250,
-            ghostClass: 'blue-background-class',
-            //forceFallback: true
-        }); 
-    } else {
-        emptyState(lessonWrapper)
-    }
-}
-function lobjPage(lobjID){
-    urlParams.set('lobj') = lobjID
-    const urlParams = new URLSearchParams(window.location.search);
-}
-
-function selectedLOBJ(event){
-    for (var i=0; i<event.length-1; i++){
-        if (event[i].hasAttribute("compID")){
-            //closePanel(0)
-            var url = new URL("https://flomotion-final.webflow.io/student-lobj-copy?chapter=" + selectedChapterID + "&lesson=" + selectedLessonID + "&lobj=" + event[i].getAttribute("compID"))
-            window.open(url, '_blank');
-            break;
-        }
-    }
-}
 function createLessons(chapterID){
     currentLessons = lessonsWrapper.querySelector(".grid-auto-row")
     if (currentLessons.children.length > 0){
@@ -482,46 +411,68 @@ function selectedLessonAuto(lessonID){
     }
     lessonRequest(lessonID)
 }
-Object.defineProperty(String.prototype, 'capitalize', {
-    value: function() { return this.charAt(0).toUpperCase() + this.slice(1);},
-    enumerable: false
-});
-
-
-function contextClicked(){
-    document.getElementById("popupTrigger").click()
-    removeContextMenu()
+function createFrames(frameList){
+    frameList.forEach(function(frame){
+    var lobjFrameEl = document.createElement("a")
+    lobjFrameEl.classList.add("frame-link", "text", "is--text-color")
+    lobjFrameEl.textContent = frame.order + ". " + frame.title 
+    lobjEl.querySelector(".frames-w").appendChild(lobjFrameEl)
+    })
+    
+}
+function createLOBJs(lobjList){
+    //empty all current elements
+    var selectedLesson = lessonWrapper.querySelector(".grid-auto-row")
+    if (selectedLesson.children.length > 0){
+        selectedLesson.innerHTML = ''
+    }
+    if (lobjList.length > 0){
+        lobjList.forEach(function (lobj){
+            var lobjEl = document.createElement("div")
+            lobjEl.classList.add("lobj-grid","is--border")
+            var lobjHTML = '<div class="lobj-numbers"><div class="icon_wrapper"><div class="icon_wrapper"><img src="https://assets.website-files.com/61365f53652529080f68048b/6149f9445288582cdd4a4739_icons8-ranking.svg" alt="" class="icon-img is--xsmall is--right-margin" style="filter: invert(100%);"><div class="text is--text-color" style="color: rgb(0, 0, 0);">---&nbsp; / --- pts</div></div></div><div class="icon_wrapper"><img src="https://assets.website-files.com/61365f53652529080f68048b/6149c5de0e3c32876ed77a41_icons8-content-2.svg" alt="" class="icon-img is--xsmall is--right-margin" style="filter: invert(100%);"><div class="text is--text-color" style="color: rgb(0, 0, 0);">10 Frames</div></div><div class="heightline"></div><div class="icon_wrapper"><img src="https://assets.website-files.com/61365f53652529080f68048b/6149c582e966ca33b609fa09_icons8-clock.svg" alt="" class="icon-img is--xsmall is--right-margin" style="filter: invert(100%);"><div class="text is--text-color" style="color: rgb(0, 0, 0);">25 Mins</div></div><div class="heightline"></div><div class="icon_wrapper"><img src="https://assets.website-files.com/61365f53652529080f68048b/6149c66b330febec5b46dcc2_icons8-ask-question.svg" alt="" class="icon-img is--xsmall is--right-margin" style="filter: invert(100%);"><h6 class="is--text-color is--weight400" style="color: rgb(0, 0, 0);">0 Q</h6></div></div><h4 style="color: rgb(0, 0, 0);" class="is--text-color">What is statistics</h4><div class="paragraph is--text-color" style="color: rgb(0, 0, 0);">Statistics is the study of different disciplines to understand hwo they realte to each each other thorugh numbers.fsdfsdf</div>'
+            lobjEl.innerHTML = lobjHTML
+            console.log("frame count" + lobj.frame_of_lobj.length)
+            lobjEl.querySelector(".lobj-numbers").children[1].children[1].textContent = lobj.frame_of_lobj.length + " Frames"
+            lobjEl.querySelector(".lobj-numbers").children[3].children[1].textContent = lobj.timeExp + " Mins"
+            lobjEl.children[1].textContent = lobj.title
+            lobjEl.children[2].textContent = lobj.desc
+            lobjEl.setAttribute("comp-type","lobj")
+            lobjEl.setAttribute("compID",lobj.id)
+            lobjEl.setAttribute("lessonID",selectedLessonID)
+            lobjEl.setAttribute("chapterID",selectedChapterID)
+            selectedLesson.appendChild(lobjEl)
+            if (lobj.frame_of_lobj.length > 0){
+                //createFrames(lobj.frame_of_lobj)
+            } else {
+                //emptyState(lobjEl)
+            }
+        })
+        var lobjSortable = lessonWrapper.querySelector(".grid-auto-row")
+        new Sortable(lobjSortable, {
+            group:"lobj",
+            animation: 250,
+            ghostClass: 'blue-background-class',
+            //forceFallback: true
+        }); 
+    } else {
+        emptyState(lessonWrapper)
+    }
+}
+function lobjPage(lobjID){
+    urlParams.set('lobj') = lobjID
+    const urlParams = new URLSearchParams(window.location.search);
 }
 
-function deleteContextClicked(element){
-    document.getElementById("deleteConfirm").classList.remove("is--hidden")
-    deleteAPI(element.getAttribute("comp-type"),element.getAttribute("compID"))
-    //element.remove()
-}
-
-function deleteAPI(type, id){
-    if (type === "frame-nav"){ type = 'frame'}
-    formMethod = "DELETE"
-    formAction += type + "/" + id
-}
-function copyContextClicked(element){
-    document.getElementById("createChapter").classList.remove("is--hidden")
-}
-function pasteContextClicked(element){
-    document.getElementById("createChapter").classList.remove("is--hidden")
-}
-
-function duplicateContextClicked(element){
-    document.getElementById("createChapter").classList.remove("is--hidden")
-}
-
-
-function frameCompContextBasic(){
-    menuItems.push({name:"edit", shortcut:"A", icon:"https://uploads-ssl.webflow.com/61365f53652529080f68048b/61671779d468842516fde279_icons8-edit.svg"})
-    menuItems.push({name:"copy", shortcut:"C", icon:"https://assets.website-files.com/61365f53652529080f68048b/6178128dc47739483610cc7f_icons8-copy-to-clipboard-3.svg"})
-    menuItems.push({name:"paste", shortcut:"V", icon:"https://assets.website-files.com/61365f53652529080f68048b/6178131ed84892069a25c131_icons8-paste-as-text-2.svg"})
-    menuItems.push({name:"duplicate", shortcut:"D", icon:"https://assets.website-files.com/61365f53652529080f68048b/6167170a2f04aa0e4dc1726d_icons8-duplicate.svg"})
-    menuItems.push({name:"delete", shortcut:"⌫", icon:"https://assets.website-files.com/61365f53652529080f68048b/616719015d15295a1716c870_icons8-empty-trash.svg"})
+function selectedLOBJ(event){
+    for (var i=0; i<event.length-1; i++){
+        if (event[i].hasAttribute("compID")){
+            //closePanel(0)
+            var url = new URL("https://flomotion-final.webflow.io/student-lobj-copy?chapter=" + selectedChapterID + "&lesson=" + selectedLessonID + "&lobj=" + event[i].getAttribute("compID"))
+            window.open(url, '_blank');
+            break;
+        }
+    }
 }
 const body = document.body;
 function letBodyScroll(bool) {
@@ -609,6 +560,47 @@ function removeContextMenu(){
         document.querySelector(".right-click_menu").remove()
         letBodyScroll(false)
     }
+}
+Object.defineProperty(String.prototype, 'capitalize', {
+    value: function() { return this.charAt(0).toUpperCase() + this.slice(1);},
+    enumerable: false
+});
+
+
+function contextClicked(){
+    document.getElementById("popupTrigger").click()
+    removeContextMenu()
+}
+
+function deleteContextClicked(element){
+    document.getElementById("deleteConfirm").classList.remove("is--hidden")
+    deleteAPI(element.getAttribute("comp-type"),element.getAttribute("compID"))
+    //element.remove()
+}
+
+function deleteAPI(type, id){
+    if (type === "frame-nav"){ type = 'frame'}
+    formMethod = "DELETE"
+    formAction += type + "/" + id
+}
+function copyContextClicked(element){
+    document.getElementById("createChapter").classList.remove("is--hidden")
+}
+function pasteContextClicked(element){
+    document.getElementById("createChapter").classList.remove("is--hidden")
+}
+
+function duplicateContextClicked(element){
+    document.getElementById("createChapter").classList.remove("is--hidden")
+}
+
+
+function frameCompContextBasic(){
+    menuItems.push({name:"edit", shortcut:"A", icon:"https://uploads-ssl.webflow.com/61365f53652529080f68048b/61671779d468842516fde279_icons8-edit.svg"})
+    menuItems.push({name:"copy", shortcut:"C", icon:"https://assets.website-files.com/61365f53652529080f68048b/6178128dc47739483610cc7f_icons8-copy-to-clipboard-3.svg"})
+    menuItems.push({name:"paste", shortcut:"V", icon:"https://assets.website-files.com/61365f53652529080f68048b/6178131ed84892069a25c131_icons8-paste-as-text-2.svg"})
+    menuItems.push({name:"duplicate", shortcut:"D", icon:"https://assets.website-files.com/61365f53652529080f68048b/6167170a2f04aa0e4dc1726d_icons8-duplicate.svg"})
+    menuItems.push({name:"delete", shortcut:"⌫", icon:"https://assets.website-files.com/61365f53652529080f68048b/616719015d15295a1716c870_icons8-empty-trash.svg"})
 }
 function addChapter(){
     formMethod = "POST"
